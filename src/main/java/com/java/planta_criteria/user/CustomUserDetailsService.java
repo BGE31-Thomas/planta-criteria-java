@@ -1,4 +1,4 @@
-package com.java.planta_criteria.security;
+package com.java.planta_criteria.user;
 
 import com.java.planta_criteria.user.User;
 import com.java.planta_criteria.user.UserRepository;

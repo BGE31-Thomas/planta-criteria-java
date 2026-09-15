@@ -9,6 +9,9 @@ import com.java.planta_criteria.taxref.dto.TaxrefSummaryDto;
 
 import com.java.planta_criteria.critere.dto.CritereDto;
 import com.java.planta_criteria.image.ImageMapper;
+import com.java.planta_criteria.source.SourceMapper;
+
+import com.java.planta_criteria.critere.CritereMapper;
 
 @Component
 public class CritereMapper {

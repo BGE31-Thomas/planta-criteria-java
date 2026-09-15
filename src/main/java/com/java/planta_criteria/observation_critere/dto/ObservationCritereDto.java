@@ -4,13 +4,13 @@ import java.util.List;
 
 import com.java.planta_criteria.critere.dto.CritereDto;
 import com.java.planta_criteria.image.dto.ImageDto;
-import com.java.planta_criteria.observation.dto.ObservationDto;
+import com.java.planta_criteria.observation.dto.ObservationSummaryDto;
 import com.java.planta_criteria.statut.dto.StatutDto;
 
 public class ObservationCritereDto {
 
     private Long id;
-    private ObservationDto observation;
+    private ObservationSummaryDto observation;
     private CritereDto critere;
     private StatutDto statut;
 
@@ -19,7 +19,13 @@ public class ObservationCritereDto {
     public ObservationCritereDto() {
     }
 
-    public ObservationCritereDto(Long id, ObservationDto observation, CritereDto critere, StatutDto statut, List<ImageDto> images) {
+    public ObservationCritereDto(
+        Long id,
+        ObservationSummaryDto observation,
+        CritereDto critere,
+        StatutDto statut,
+        List<ImageDto> images
+    ) {
         this.id = id;
         this.observation = observation;
         this.critere = critere;
@@ -29,19 +35,19 @@ public class ObservationCritereDto {
 
     public Long getId() {
         return id;
-    }   
+    }
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public ObservationDto getObservation() {
+    public ObservationSummaryDto getObservation() {
         return observation;
     }
 
-    public void setObservation(ObservationDto observation) {
+    public void setObservation(ObservationSummaryDto observation) {
         this.observation = observation;
-    }   
+    }
 
     public CritereDto getCritere() {
         return critere;
@@ -59,11 +65,11 @@ public class ObservationCritereDto {
         this.statut = statut;
     }
 
-
     public List<ImageDto> getImages() {
         return images;
     }
 
-    
-
+    public void setImages(List<ImageDto> images) {
+        this.images = images;
+    }
 }

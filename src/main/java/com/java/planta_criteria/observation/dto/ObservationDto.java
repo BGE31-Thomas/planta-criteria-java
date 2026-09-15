@@ -1,36 +1,30 @@
-package com.java.planta_criteria.observation_critere.dto;
+package com.java.planta_criteria.observation.dto;
 
 import java.util.List;
 
-import com.java.planta_criteria.critere.dto.CritereDto;
-import com.java.planta_criteria.image.dto.ImageDto;
-import com.java.planta_criteria.observation.dto.ObservationSummaryDto;
-import com.java.planta_criteria.statut.dto.StatutDto;
+import com.java.planta_criteria.observation_critere.dto.ObservationCritereDto;
 
-public class ObservationCritereDto {
+import java.time.LocalDateTime;
 
+public class ObservationDto {
     private Long id;
-    private ObservationSummaryDto observation;
-    private CritereDto critere;
-    private StatutDto statut;
+    private LocalDateTime dateHeure;
+    private String lieu;
+    private List<ObservationCritereDto> observationsCritere;
 
-    private List<ImageDto> images;
-
-    public ObservationCritereDto() {
+    public ObservationDto() {
     }
 
-    public ObservationCritereDto(
+    public ObservationDto(
         Long id,
-        ObservationSummaryDto observation,
-        CritereDto critere,
-        StatutDto statut,
-        List<ImageDto> images
+        LocalDateTime dateHeure,
+        String lieu,
+        List<ObservationCritereDto> observationsCritere
     ) {
         this.id = id;
-        this.observation = observation;
-        this.critere = critere;
-        this.statut = statut;
-        this.images = images;
+        this.dateHeure = dateHeure;
+        this.lieu = lieu;
+        this.observationsCritere = observationsCritere;
     }
 
     public Long getId() {
@@ -41,35 +35,23 @@ public class ObservationCritereDto {
         this.id = id;
     }
 
-    public ObservationSummaryDto getObservation() {
-        return observation;
+    public LocalDateTime getDateHeure() {
+        return dateHeure;
     }
 
-    public void setObservation(ObservationSummaryDto observation) {
-        this.observation = observation;
+    public void setDateHeure(LocalDateTime dateHeure) {
+        this.dateHeure = dateHeure;
     }
 
-    public CritereDto getCritere() {
-        return critere;
+    public String getLieu() {
+        return lieu;
     }
 
-    public void setCritere(CritereDto critere) {
-        this.critere = critere;
+    public void setLieu(String lieu) {
+        this.lieu = lieu;
     }
 
-    public StatutDto getStatut() {
-        return statut;
-    }
-
-    public void setStatut(StatutDto statut) {
-        this.statut = statut;
-    }
-
-    public List<ImageDto> getImages() {
-        return images;
-    }
-
-    public void setImages(List<ImageDto> images) {
-        this.images = images;
+    public List<ObservationCritereDto> getObservationsCritere() {
+        return observationsCritere;
     }
 }

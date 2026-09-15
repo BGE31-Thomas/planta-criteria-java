@@ -1,5 +1,11 @@
 package com.java.planta_criteria.statut;
 
+import org.springframework.stereotype.Component;
+
+import com.java.planta_criteria.statut.dto.StatutDto;
+
+import com.java.planta_criteria.statut.Statut;
+
 @Component
 public class StatutMapper {
 

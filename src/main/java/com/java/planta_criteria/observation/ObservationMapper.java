@@ -24,7 +24,7 @@ public class ObservationMapper {
 
         return new ObservationDto(
             observation.getId(),
-            toDate(observation),
+            observation.getDateHeure(),
             observation.getLieu(),
             observation.getObservationsCritere()
                 .stream()
@@ -39,21 +39,10 @@ public class ObservationMapper {
 
         return new ObservationSummaryDto(
             observation.getId(),
-            toDate(observation),
+            observation.getDateHeure(),
             observation.getLieu()
         );
     }
 
-    private Date toDate(Observation observation) {
-
-        if (observation.getDateHeure() == null) {
-            return null;
-        }
-
-        return Date.from(
-            observation.getDateHeure()
-                .atZone(ZoneId.systemDefault())
-                .toInstant()
-        );
-    }
+    
 }

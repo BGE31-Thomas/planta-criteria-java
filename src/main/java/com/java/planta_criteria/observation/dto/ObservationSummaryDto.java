@@ -1,17 +1,17 @@
 package com.java.planta_criteria.observation.dto;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class ObservationSummaryDto {
 
     private Long id;
-    private Date date;
+    private LocalDateTime date;
     private String lieu;
 
     public ObservationSummaryDto() {
     }
 
-    public ObservationSummaryDto(Long id, Date date, String lieu) {
+    public ObservationSummaryDto(Long id, LocalDateTime date, String lieu) {
         this.id = id;
         this.date = date;
         this.lieu = lieu;
@@ -25,11 +25,11 @@ public class ObservationSummaryDto {
         this.id = id;
     }
 
-    public Date getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 

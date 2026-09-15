@@ -1,4 +1,4 @@
-package com.java.planta_criteria.auth.dto;
+package com.java.planta_criteria.register.dto;
 
 public class RegistrationDto {
 

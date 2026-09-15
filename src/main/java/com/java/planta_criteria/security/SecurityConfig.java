@@ -20,6 +20,8 @@ import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.java.planta_criteria.user.CustomUserDetailsService;
+
 @Configuration
 @EnableMethodSecurity
 public class SecurityConfig {

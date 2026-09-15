@@ -7,7 +7,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.java.planta_criteria.auth.EmailAlreadyUsedException;
+
 import java.util.HashSet;
+
+import java.util.Set;
 
 @Service
 public class RegistrationService {

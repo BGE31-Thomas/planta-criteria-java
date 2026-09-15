@@ -7,6 +7,11 @@ import com.java.planta_criteria.taxref.dto.PlantSearchDto;
 
 import com.java.planta_criteria.taxref.dto.TaxrefSummaryDto;
 
+import com.java.planta_criteria.critere.CritereMapper;
+import com.java.planta_criteria.taxref.TaxrefSummaryMapper;
+
+import com.java.planta_criteria.taxref.Taxref;
+
 @Component
 public class TaxrefMapper {
 
@@ -22,14 +27,6 @@ public class TaxrefMapper {
         return new PlantSearchDto(
                 taxref.getCdNom(),
                 taxref.getNomCompletHtml()
-        );
-    }
-
-    public TaxrefSummaryDto toTaxrefSummaryDto(Taxref taxref) {
-        return new TaxrefSummaryDto(
-                taxref.getCdNom(),
-                taxref.getNom(),
-                taxref.getLbNom()
         );
     }
 
