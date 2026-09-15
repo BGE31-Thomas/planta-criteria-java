@@ -1,5 +1,7 @@
 package com.java.planta_criteria.auth.dto;
 
-public class LoginRequest {
-
+public record LoginRequest(
+        String email,
+        String password
+) {
 }
