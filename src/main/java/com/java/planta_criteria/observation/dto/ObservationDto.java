@@ -1,26 +1,36 @@
-package com.java.planta_criteria.observation.dto;
+package com.java.planta_criteria.observation_critere.dto;
 
-import java.util.Date;
 import java.util.List;
 
-import com.java.planta_criteria.observation_critere.dto.ObservationCritereDto;
+import com.java.planta_criteria.critere.dto.CritereDto;
+import com.java.planta_criteria.image.dto.ImageDto;
+import com.java.planta_criteria.observation.dto.ObservationSummaryDto;
+import com.java.planta_criteria.statut.dto.StatutDto;
 
-public class ObservationDto {
+public class ObservationCritereDto {
 
     private Long id;
-    private Date date;
-    private String lieu;
+    private ObservationSummaryDto observation;
+    private CritereDto critere;
+    private StatutDto statut;
 
-    private List<ObservationCritereDto> observationsCritere;
+    private List<ImageDto> images;
 
-    public ObservationDto() {
+    public ObservationCritereDto() {
     }
 
-    public ObservationDto(Long id, Date date, String lieu, List<ObservationCritereDto> observationsCritere) {
+    public ObservationCritereDto(
+        Long id,
+        ObservationSummaryDto observation,
+        CritereDto critere,
+        StatutDto statut,
+        List<ImageDto> images
+    ) {
         this.id = id;
-        this.date = date;
-        this.lieu = lieu;
-        this.observationsCritere = observationsCritere;
+        this.observation = observation;
+        this.critere = critere;
+        this.statut = statut;
+        this.images = images;
     }
 
     public Long getId() {
@@ -31,24 +41,35 @@ public class ObservationDto {
         this.id = id;
     }
 
-    public Date getDate() {
-        return date;
+    public ObservationSummaryDto getObservation() {
+        return observation;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setObservation(ObservationSummaryDto observation) {
+        this.observation = observation;
     }
 
-    public String getLieu() {
-        return lieu;
+    public CritereDto getCritere() {
+        return critere;
     }
 
-    public void setLieu(String lieu) {
-        this.lieu = lieu;
+    public void setCritere(CritereDto critere) {
+        this.critere = critere;
     }
 
-    public List<ObservationCritereDto> getObservationsCritere() {
-        return observationsCritere;
+    public StatutDto getStatut() {
+        return statut;
     }
 
+    public void setStatut(StatutDto statut) {
+        this.statut = statut;
+    }
+
+    public List<ImageDto> getImages() {
+        return images;
+    }
+
+    public void setImages(List<ImageDto> images) {
+        this.images = images;
+    }
 }

@@ -10,7 +10,7 @@ public class CommuneMapper {
     public CommuneSearchDto toSearchDto(Commune commune) {
         return new CommuneSearchDto(
             commune.getId(),
-            commune.getCode_postal() + " " + commune.getNom()
+            commune.getNom() + " (" + commune.getCode_postal() + ")"
         );
     }
 

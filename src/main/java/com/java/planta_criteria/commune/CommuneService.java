@@ -1,46 +1,36 @@
 package com.java.planta_criteria.commune;
 
-import org.springframework.stereotype.Service;
-
 import com.java.planta_criteria.commune.dto.CommuneSearchDto;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
 import java.util.List;
 
 @Service
+@Transactional(readOnly = true)
 public class CommuneService {
 
     private final CommuneRepository communeRepository;
+    private final CommuneMapper communeMapper;
 
     public CommuneService(
-        CommuneRepository communeRepository
+        CommuneRepository communeRepository,
+        CommuneMapper communeMapper
     ) {
         this.communeRepository = communeRepository;
+        this.communeMapper = communeMapper;
     }
 
     public List<CommuneSearchDto> search(String query) {
 
         if (query == null || query.length() < 2) {
-            return Collections.emptyList();
+            return List.of();
         }
 
         return communeRepository
             .findTop10ByNomContainingIgnoreCase(query)
             .stream()
-            .map(this::toDto)
+            .map(communeMapper::toSearchDto)
             .toList();
-    }
-
-    private CommuneSearchDto toDto(Commune commune) {
-
-        String text = commune.getNom()
-            + " ("
-            + commune.getCode_postal()
-            + ")";
-
-        return new CommuneSearchDto(
-            commune.getId(),
-            text
-        );
     }
 }
