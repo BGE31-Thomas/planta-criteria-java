@@ -35,7 +35,7 @@ public class TaxrefService {
             .toList();
     }
 
-    public PlantDto findById(Long id) {
+    public PlantDto findById(Integer id) {
 
         Taxref taxref = taxrefRepository.findById(id)
             .orElseThrow(() ->
@@ -45,7 +45,7 @@ public class TaxrefService {
         return taxrefMapper.toDto(taxref);
     }
 
-    public PlantDto findByIdOrValidTaxon(Long id) {
+    public PlantDto findByIdOrValidTaxon(Integer id) {
 
         Taxref taxref = taxrefRepository.findById(id)
             .orElseThrow(() ->

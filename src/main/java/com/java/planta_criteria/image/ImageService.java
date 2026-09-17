@@ -29,7 +29,7 @@ public class ImageService {
             .toList();
     }
 
-    public ImageDto findById(Long id) {
+    public ImageDto findById(Integer id) {
 
         Image image = imageRepository.findById(id)
             .orElseThrow(() ->

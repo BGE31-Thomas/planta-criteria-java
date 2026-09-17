@@ -7,16 +7,18 @@ import java.util.List;
 
 import com.java.planta_criteria.critere.Critere;
 
+import com.java.planta_criteria.observation.Observation;
+
 @Entity
 @Table(name = "taxref")
 public class Taxref {
 
     @Id
     @Column(name = "cd_nom")
-    private Long cdNom;
+    private Integer cdNom;
 
     @Column(name = "cd_ref")
-    private Long cdRef;
+    private Integer cdRef;
 
     @Column(length = 255)
     private String famille;
@@ -37,26 +39,33 @@ public class Taxref {
     private List<Critere> criteres = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cd_ref", referencedColumnName = "cd_nom")
+    @JoinColumn(
+        name = "cd_ref",
+        referencedColumnName = "cd_nom",
+        insertable = false,
+        updatable = false
+    )
     private Taxref nomValide;
 
     @OneToMany(mappedBy = "nomValide")
-    private List<Taxref> synonymes;
+    private List<Taxref> synonymes = new ArrayList<>();
 
+    @OneToMany(mappedBy = "plante")
+    private List<Observation> observations = new ArrayList<>();
 
-    public Long getCdNom() {
+    public Integer getCdNom() {
         return cdNom;
     }
 
-    public void setCdNom(Long cdNom) {
+    public void setCdNom(Integer cdNom) {
         this.cdNom = cdNom;
     }
 
-    public Long getCdRef() {
+    public Integer getCdRef() {
         return cdRef;
     }
 
-    public void setCdRef(Long cdRef) {
+    public void setCdRef(Integer cdRef) {
         this.cdRef = cdRef;
     }
 
@@ -135,5 +144,24 @@ public class Taxref {
     public void removeCritere(Critere critere) {
         criteres.remove(critere);
         critere.setPlante(null);
+    }
+
+    public List<Observation> getObservations() {
+        return observations;
+    }
+
+    public void addObservation(Observation observation) {
+        if (!observations.contains(observation)) {
+            observations.add(observation);
+            observation.setPlante(this);
+        }
+    }
+
+    public void removeObservation(Observation observation) {
+        if (observations.remove(observation)) {
+            if (observation.getPlante() == this) {
+                observation.setPlante(null);
+            }
+        }
     }
 }

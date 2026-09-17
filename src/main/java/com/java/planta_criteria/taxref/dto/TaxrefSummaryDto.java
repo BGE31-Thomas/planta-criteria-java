@@ -2,24 +2,24 @@ package com.java.planta_criteria.taxref.dto;
 
 public class TaxrefSummaryDto {
 
-    private Long id;
+    private Integer id;
     private String nom;
     private String lbNom;
 
     public TaxrefSummaryDto() {
     }
 
-    public TaxrefSummaryDto(Long id, String nom, String lbNom) {
+    public TaxrefSummaryDto(Integer id, String nom, String lbNom) {
         this.id = id;
         this.nom = nom;
         this.lbNom = lbNom;
     }
 
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
     public String getNom() {

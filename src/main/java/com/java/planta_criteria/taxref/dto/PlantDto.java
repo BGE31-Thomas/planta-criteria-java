@@ -6,7 +6,7 @@ import com.java.planta_criteria.critere.dto.CritereDto;
 
 public class PlantDto {
 
-    private Long id;
+    private Integer id;
     private String nom;
     private String lbNom;
     private String nomCompletHtml;
@@ -18,7 +18,7 @@ public class PlantDto {
     public PlantDto() {
     }  
 
-    public PlantDto(Long id, String nom, String lbNom, String nomCompletHtml, String famille, List<TaxrefSummaryDto> synonymes, List<CritereDto> criteres) {
+    public PlantDto(Integer id, String nom, String lbNom, String nomCompletHtml, String famille, List<TaxrefSummaryDto> synonymes, List<CritereDto> criteres) {
         this.id = id;
         this.nom = nom;
         this.lbNom = lbNom;
@@ -28,11 +28,11 @@ public class PlantDto {
         this.criteres = criteres;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }   
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

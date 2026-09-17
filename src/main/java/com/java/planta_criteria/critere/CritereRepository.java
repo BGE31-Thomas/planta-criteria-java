@@ -6,7 +6,7 @@ import com.java.planta_criteria.taxref.Taxref;
 
 import java.util.List;
 
-public interface CritereRepository extends JpaRepository<Critere, Long> {
+public interface CritereRepository extends JpaRepository<Critere, Integer> {
 
     List<Critere> findByPlante(Taxref plante);
 }

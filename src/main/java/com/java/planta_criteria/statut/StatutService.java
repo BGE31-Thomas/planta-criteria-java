@@ -29,7 +29,7 @@ public class StatutService {
             .toList();
     }
 
-    public StatutDto findById(Long id) {
+    public StatutDto findById(Integer id) {
 
         Statut statut = statutRepository.findById(id)
             .orElseThrow(() ->

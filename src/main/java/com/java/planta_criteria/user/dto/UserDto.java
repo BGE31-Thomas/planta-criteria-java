@@ -4,7 +4,7 @@ import java.util.Set;
 
 public class UserDto {
 
-    private Long id;
+    private Integer id;
     private String email;
     private String username;
     private Set<String> roles;
@@ -13,7 +13,7 @@ public class UserDto {
     public UserDto() {
     }
 
-    public UserDto(Long id, String email, String username, Set<String> roles, boolean verified) {
+    public UserDto(Integer id, String email, String username, Set<String> roles, boolean verified) {
         this.id = id;
         this.email = email;
         this.username = username;
@@ -21,10 +21,10 @@ public class UserDto {
         this.verified = verified;
     }
     
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

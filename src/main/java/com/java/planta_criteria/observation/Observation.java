@@ -1,12 +1,13 @@
 package com.java.planta_criteria.observation;
 
+import com.java.planta_criteria.observation_critere.ObservationCritere;
+import com.java.planta_criteria.serie.Serie;
 import jakarta.persistence.*;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.java.planta_criteria.observation_critere.ObservationCritere;
+import com.java.planta_criteria.taxref.Taxref;
 
 @Entity
 @Table(name = "observation")
@@ -14,57 +15,64 @@ public class Observation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
-    @Column(name = "date_heure")
-    private LocalDateTime dateHeure;
+    @ManyToOne(
+        fetch = FetchType.LAZY,
+        cascade = CascadeType.PERSIST,
+        optional = false
+    )
+    @JoinColumn(name = "serie_id", nullable = false)
+    private Serie serie;
 
-    @Column(length = 255, nullable = false)
-    private String lieu;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "plante_id", nullable = false)
+    private Taxref plante;
 
     @OneToMany(
         mappedBy = "observation",
-        cascade = CascadeType.ALL,
+        cascade = CascadeType.PERSIST,
         orphanRemoval = true
     )
-    private List<ObservationCritere> observationsCritere =
-        new ArrayList<>();
+    private List<ObservationCritere> observationsCritere = new ArrayList<>();
 
-    public Long getId() {
+
+    public Integer getId() {
         return id;
     }
 
-    public LocalDateTime getDateHeure() {
-        return dateHeure;
+    public Serie getSerie() {
+        return serie;
     }
 
-    public void setDateHeure(LocalDateTime dateHeure) {
-        this.dateHeure = dateHeure;
-    }
-
-    public String getLieu() {
-        return lieu;
-    }
-
-    public void setLieu(String lieu) {
-        this.lieu = lieu;
+    public void setSerie(Serie serie) {
+        this.serie = serie;
     }
 
     public List<ObservationCritere> getObservationsCritere() {
         return observationsCritere;
     }
 
-    public void addObservationCritere(
-        ObservationCritere observationCritere
-    ) {
-        observationsCritere.add(observationCritere);
-        observationCritere.setObservation(this);
+    public void addObservationsCritere(ObservationCritere oc) {
+        if (!observationsCritere.contains(oc)) {
+            observationsCritere.add(oc);
+            oc.setObservation(this);
+        }
     }
 
-    public void removeObservationCritere(
-        ObservationCritere observationCritere
-    ) {
-        observationsCritere.remove(observationCritere);
-        observationCritere.setObservation(null);
+    public void removeObservationsCritere(ObservationCritere oc) {
+        if (observationsCritere.remove(oc)) {
+            if (oc.getObservation() == this) {
+                oc.setObservation(null);
+            }
+        }
+    }
+
+    public Taxref getPlante() {
+        return plante;
+    }
+
+    public void setPlante(Taxref plante) {
+        this.plante = plante;
     }
 }

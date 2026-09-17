@@ -49,7 +49,7 @@ public class ObservationService {
     }
 
     @Transactional(readOnly = true)
-    public ObservationDto findById(Long id) {
+    public ObservationDto findById(Integer id) {
 
         Observation observation = observationRepository.findById(id)
             .orElseThrow(() ->

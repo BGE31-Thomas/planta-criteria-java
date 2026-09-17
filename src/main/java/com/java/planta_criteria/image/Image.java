@@ -11,7 +11,7 @@ public class Image {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(length = 255, nullable = false)
     private String chemin;
@@ -30,7 +30,7 @@ public class Image {
     @JoinColumn(name = "observation_critere_id")
     private ObservationCritere observationCritere;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 

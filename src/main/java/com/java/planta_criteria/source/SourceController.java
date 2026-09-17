@@ -25,7 +25,7 @@ public class SourceController {
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public SourceDto findById(
-        @PathVariable Long id
+        @PathVariable Integer id
     ) {
         return sourceService.findById(id);
     }

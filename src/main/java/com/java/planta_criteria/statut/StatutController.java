@@ -24,7 +24,7 @@ public class StatutController {
 
     @GetMapping("/{id}")
     public StatutDto findById(
-        @PathVariable Long id
+        @PathVariable Integer id
     ) {
         return statutService.findById(id);
     }

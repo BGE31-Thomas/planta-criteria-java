@@ -27,7 +27,7 @@ public class ObservationController {
 
     @GetMapping("/{id}")
     public ObservationDto findById(
-        @PathVariable Long id
+        @PathVariable Integer id
     ) {
         return observationService.findById(id);
     }

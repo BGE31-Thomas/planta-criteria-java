@@ -2,7 +2,7 @@ package com.java.planta_criteria.statut;
 
 public class StatutNotFoundException extends RuntimeException {
 
-    public StatutNotFoundException(Long id) {
+    public StatutNotFoundException(Integer id) {
         super("Statut introuvable : " + id);
     }
 

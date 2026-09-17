@@ -29,7 +29,7 @@ public class ObservationCritereService {
             .toList();
     }
 
-    public ObservationCritereDto findById(Long id) {
+    public ObservationCritereDto findById(Integer id) {
 
         ObservationCritere observationCritere =
             repository.findById(id)

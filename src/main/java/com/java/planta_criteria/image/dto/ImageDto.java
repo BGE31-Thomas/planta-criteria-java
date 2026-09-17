@@ -2,7 +2,7 @@ package com.java.planta_criteria.image.dto;
 
 public class ImageDto {
 
-    private Long id;
+    private Integer id;
     private String chemin;
     private String auteur;
     private String description;
@@ -11,17 +11,17 @@ public class ImageDto {
     public ImageDto() {
     }
 
-    public ImageDto(Long id, String chemin, String auteur, String description) {
+    public ImageDto(Integer id, String chemin, String auteur, String description) {
         this.id = id;
         this.chemin = chemin;
         this.auteur = auteur;
         this.description = description;
     }
     
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
     public String getChemin() {

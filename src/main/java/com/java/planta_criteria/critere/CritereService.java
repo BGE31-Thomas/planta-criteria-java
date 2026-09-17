@@ -26,7 +26,7 @@ public class CritereService {
         this.critereMapper = critereMapper;
     }
 
-    public CritereDto findById(Long id) {
+    public CritereDto findById(Integer id) {
 
         Critere critere = critereRepository.findById(id)
             .orElseThrow(() ->
@@ -36,7 +36,7 @@ public class CritereService {
         return critereMapper.toSearchDto(critere);
     }
 
-    public List<CritereDto> findByPlante(Long planteId) {
+    public List<CritereDto> findByPlante(Integer planteId) {
 
         Taxref plante = taxrefRepository.findById(planteId)
             .orElseThrow(() ->

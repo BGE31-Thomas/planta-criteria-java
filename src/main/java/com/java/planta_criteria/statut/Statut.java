@@ -21,7 +21,7 @@ public class Statut {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(length = 255, nullable = false)
     private String libelle;
@@ -33,7 +33,7 @@ public class Statut {
     )
     private List<ObservationCritere> observationsCriteres = new ArrayList<>();
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 

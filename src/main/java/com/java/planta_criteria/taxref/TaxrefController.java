@@ -42,7 +42,7 @@ public class TaxrefController {
     @GetMapping("/plant/{id}")
     @PreAuthorize("hasRole('USER')")
     public PlantDto findById(
-        @PathVariable Long id
+        @PathVariable Integer id
     ) {
         return taxrefService.findByIdOrValidTaxon(id);
     }

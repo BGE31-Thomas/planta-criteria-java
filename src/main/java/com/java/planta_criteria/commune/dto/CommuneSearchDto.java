@@ -2,18 +2,18 @@ package com.java.planta_criteria.commune.dto;
 
 public class CommuneSearchDto {
 
-    private Long id;
+    private Integer id;
     private String text;
 
     public CommuneSearchDto() {
     }
 
-    public CommuneSearchDto(Long id, String text) {
+    public CommuneSearchDto(Integer id, String text) {
         this.id = id;
         this.text = text;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -21,7 +21,7 @@ public class CommuneSearchDto {
         return text;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

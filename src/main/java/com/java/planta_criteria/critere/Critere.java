@@ -16,7 +16,7 @@ public class Critere {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(length = 255, nullable = false)
     private String organe;
@@ -47,7 +47,7 @@ public class Critere {
     )
     private List<Image> images = new ArrayList<>();
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 

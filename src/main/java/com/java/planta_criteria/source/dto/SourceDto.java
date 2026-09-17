@@ -2,7 +2,7 @@ package com.java.planta_criteria.source.dto;
 
 public class SourceDto {
 
-    private Long id;
+    private Integer id;
     private String titre;
     private String auteur;
     private Integer annee;
@@ -10,17 +10,17 @@ public class SourceDto {
     public SourceDto() {
     }
 
-    public SourceDto(Long id, String titre, String auteur, Integer annee) {
+    public SourceDto(Integer id, String titre, String auteur, Integer annee) {
         this.id = id;
         this.titre = titre;
         this.auteur = auteur;
         this.annee = annee;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
     public String getTitre() {

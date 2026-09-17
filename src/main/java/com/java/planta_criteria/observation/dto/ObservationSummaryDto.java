@@ -4,24 +4,24 @@ import java.time.LocalDateTime;
 
 public class ObservationSummaryDto {
 
-    private Long id;
+    private Integer id;
     private LocalDateTime date;
     private String lieu;
 
     public ObservationSummaryDto() {
     }
 
-    public ObservationSummaryDto(Long id, LocalDateTime date, String lieu) {
+    public ObservationSummaryDto(Integer id, LocalDateTime date, String lieu) {
         this.id = id;
         this.date = date;
         this.lieu = lieu;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

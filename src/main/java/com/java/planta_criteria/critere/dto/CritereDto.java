@@ -7,7 +7,7 @@ import com.java.planta_criteria.source.dto.SourceDto;
 
 public class CritereDto {
 
-    private Long id;
+    private Integer id;
     private String organe;
     private String description;
 
@@ -17,7 +17,7 @@ public class CritereDto {
     public CritereDto() {
     }
 
-    public CritereDto(Long id, String organe, String description, SourceDto source, List<ImageDto> images) {
+    public CritereDto(Integer id, String organe, String description, SourceDto source, List<ImageDto> images) {
         this.id = id;
         this.organe = organe;
         this.description = description;
@@ -25,10 +25,10 @@ public class CritereDto {
         this.images = images;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
     public String getOrgane() {

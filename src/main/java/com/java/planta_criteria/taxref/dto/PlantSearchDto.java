@@ -2,22 +2,22 @@ package com.java.planta_criteria.taxref.dto;
 
 public class PlantSearchDto {
 
-    private Long id;
+    private Integer id;
     private String label;
 
     public PlantSearchDto() {
     }
 
-    public PlantSearchDto(Long id, String label) {
+    public PlantSearchDto(Integer id, String label) {
         this.id = id;
         this.label = label;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

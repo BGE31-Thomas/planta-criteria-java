@@ -29,7 +29,7 @@ public class SourceService {
             .toList();
     }
 
-    public SourceDto findById(Long id) {
+    public SourceDto findById(Integer id) {
 
         Source source = sourceRepository.findById(id)
             .orElseThrow(() ->

@@ -19,7 +19,7 @@ public class CritereController {
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('USER')")
     public CritereDto findById(
-        @PathVariable Long id
+        @PathVariable Integer id
     ) {
         return critereService.findById(id);
     }
@@ -27,7 +27,7 @@ public class CritereController {
     @GetMapping("/plante/{planteId}")
     @PreAuthorize("hasRole('USER')")
     public List<CritereDto> findByPlante(
-        @PathVariable Long planteId
+        @PathVariable Integer planteId
     ) {
         return critereService.findByPlante(planteId);
     }

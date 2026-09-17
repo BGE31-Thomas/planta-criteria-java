@@ -24,7 +24,7 @@ public class ImageController {
 
     @GetMapping("/{id}")
     public ImageDto findById(
-        @PathVariable Long id
+        @PathVariable Integer id
     ) {
         return imageService.findById(id);
     }

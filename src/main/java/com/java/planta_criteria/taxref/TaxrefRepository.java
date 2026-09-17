@@ -5,9 +5,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface TaxrefRepository
-    extends JpaRepository<Taxref, Long> {
+    extends JpaRepository<Taxref, Integer> {
 
-    List<Taxref> findByCdNom(Long cdNom);
+    List<Taxref> findByCdNom(Integer cdNom);
 
     List<Taxref> findTop20ByLbNomContainingIgnoreCase(String q);
 }
