@@ -12,6 +12,9 @@ import com.java.planta_criteria.taxref.TaxrefRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.java.planta_criteria.serie.Serie;
+import com.java.planta_criteria.serie.SerieRepository;
+
 import java.util.List;
 
 @Service
@@ -22,21 +25,18 @@ public class ObservationService {
     private final ObservationRepository observationRepository;
     private final ObservationMapper observationMapper;
     private final TaxrefRepository taxrefRepository;
-    private final CritereRepository critereRepository;
-    private final StatutRepository statutRepository;
+    private final SerieRepository serieRepository;
 
     public ObservationService(
         ObservationRepository observationRepository,
         ObservationMapper observationMapper,
         TaxrefRepository taxrefRepository,
-        CritereRepository critereRepository,
-        StatutRepository statutRepository
+        SerieRepository serieRepository
     ) {
         this.observationRepository = observationRepository;
         this.observationMapper = observationMapper;
         this.taxrefRepository = taxrefRepository;
-        this.critereRepository = critereRepository;
-        this.statutRepository = statutRepository;
+        this.serieRepository = serieRepository;
     }
 
     @Transactional(readOnly = true)
@@ -69,36 +69,18 @@ public class ObservationService {
                 )
             );
 
-        Statut statutNonVerifie =
-            statutRepository.findByLibelle(STATUT_NON_VERIFIE)
-                .orElseThrow(() ->
-                    new IllegalStateException(
-                        "Le statut '" + STATUT_NON_VERIFIE
-                            + "' n'existe pas en base de données"
-                    )
-                );
+        Serie serie = serieRepository.findById(dto.getSerieId())
+            .orElseThrow(() ->
+                new IllegalArgumentException(
+                    "Série introuvable : " + dto.getSerieId()
+                )
+            );
 
         Observation observation = new Observation();
 
-        observation.setDateHeure(dto.getDateHeure());
-        observation.setLieu(dto.getLieu());
-
-        List<Critere> criteres =
-            critereRepository.findByPlante(plante);
-
-        for (Critere critere : criteres) {
-
-            ObservationCritere observationCritere =
-                new ObservationCritere();
-
-            observationCritere.setCritere(critere);
-            observationCritere.setStatut(statutNonVerifie);
-
-            observation.addObservationCritere(
-                observationCritere
-            );
-        }
-
+        observation.setPlante(plante);
+        observation.setSerie(serie);
+      
         Observation saved =
             observationRepository.save(observation);
 

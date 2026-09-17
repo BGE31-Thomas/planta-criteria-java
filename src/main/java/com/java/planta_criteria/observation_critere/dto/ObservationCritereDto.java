@@ -1,9 +1,9 @@
-package com.java.planta_criteria.observation_critere;
+package com.java.planta_criteria.observation_critere.dto;
 
-import com.java.planta_criteria.critere.CritereDto;
-import com.java.planta_criteria.image.ImageDto;
-import com.java.planta_criteria.observation.ObservationSummaryDto;
-import com.java.planta_criteria.statut.StatutDto;
+import com.java.planta_criteria.critere.dto.CritereDto;
+import com.java.planta_criteria.image.dto.ImageDto;
+import com.java.planta_criteria.observation.dto.ObservationSummaryDto;
+import com.java.planta_criteria.statut.dto.StatutDto;
 
 import java.util.List;
 
