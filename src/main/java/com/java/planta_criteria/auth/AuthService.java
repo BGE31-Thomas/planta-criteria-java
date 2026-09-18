@@ -3,7 +3,7 @@ package com.java.planta_criteria.auth;
 import com.java.planta_criteria.auth.dto.AuthResponse;
 import com.java.planta_criteria.auth.dto.LoginRequest;
 import com.java.planta_criteria.security.JwtService;
-import com.java.planta_criteria.user.User;
+import com.java.planta_criteria.user.Users;
 import com.java.planta_criteria.user.UserRepository;
 
 import org.springframework.security.authentication.AuthenticationManager;
@@ -42,7 +42,7 @@ public class AuthService {
         UserDetails userDetails =
             (UserDetails) authentication.getPrincipal();
 
-        User user =
+        Users user =
             userRepository.findByEmail(request.email())
                 .orElseThrow();
 

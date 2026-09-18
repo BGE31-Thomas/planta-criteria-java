@@ -8,7 +8,7 @@ import java.util.List;
 import com.java.planta_criteria.image.Image;
 import com.java.planta_criteria.source.Source;
 import com.java.planta_criteria.taxref.Taxref;
-import com.java.planta_criteria.user.User;
+import com.java.planta_criteria.user.Users;
 
 @Entity
 @Table(name = "critere")
@@ -38,7 +38,7 @@ public class Critere {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User user;
+    private Users user;
 
     @OneToMany(
         mappedBy = "critere",
@@ -83,11 +83,11 @@ public class Critere {
         this.source = source;
     }
 
-    public User getUser() {
+    public Users getUsers() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUsers(Users user) {
         this.user = user;
     }
 

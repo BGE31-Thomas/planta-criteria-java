@@ -1,7 +1,7 @@
 package com.java.planta_criteria.register;
 
 import com.java.planta_criteria.register.dto.RegistrationDto;
-import com.java.planta_criteria.user.User;
+import com.java.planta_criteria.user.Users;
 import com.java.planta_criteria.user.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -28,15 +28,15 @@ public class RegistrationService {
     }
 
     @Transactional
-    public User register(RegistrationDto dto) {
-
+    public Users register(RegistrationDto dto) {
+        
         if (userRepository.existsByEmail(dto.getEmail())) {
             throw new EmailAlreadyUsedException(
                 dto.getEmail()
             );
         }
 
-        User user = new User();
+        Users user = new Users();
 
         user.setEmail(dto.getEmail());
         user.setUsername(dto.getUsername());
@@ -50,7 +50,8 @@ public class RegistrationService {
         user.setRoles(
             new HashSet<>(Set.of("ROLE_USER"))
         );
-
+        
+        System.out.println(user.getEmail());
         return userRepository.save(user);
     }
 }

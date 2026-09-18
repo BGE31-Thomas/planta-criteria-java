@@ -21,6 +21,9 @@ public class RegistrationController {
     public void register(
         @RequestBody RegistrationDto dto
     ) {
+        System.out.println(">>> REGISTER CONTROLLER ATTEINT");
         registrationService.register(dto);
     }
+
+    
 }

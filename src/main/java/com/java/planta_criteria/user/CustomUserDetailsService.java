@@ -1,6 +1,6 @@
 package com.java.planta_criteria.user;
 
-import com.java.planta_criteria.user.User;
+import com.java.planta_criteria.user.Users;
 import com.java.planta_criteria.user.UserRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.*;
@@ -21,7 +21,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email)
         throws UsernameNotFoundException {
 
-        User user = userRepository.findByEmail(email)
+        Users user = userRepository.findByEmail(email)
             .orElseThrow(() ->
                 new UsernameNotFoundException(
                     "Utilisateur introuvable : " + email
