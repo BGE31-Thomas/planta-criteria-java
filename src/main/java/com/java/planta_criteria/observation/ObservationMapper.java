@@ -41,14 +41,4 @@ public class ObservationMapper {
         );
     }
 
-    public ObservationSummaryDto toSummaryDto(
-        Observation observation
-    ) {
-
-        return new ObservationSummaryDto(
-            observation.getId()
-        );
-    }
-
-    
 }

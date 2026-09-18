@@ -13,14 +13,6 @@ import java.util.Date;
 @Component
 public class SerieMapper {
 
-    private final ObservationMapper observationMapper;
-
-    public SerieMapper(
-        ObservationMapper observationMapper
-    ) {
-        this.observationMapper = observationMapper;
-    }
-
     public SerieDto toSearchDto(Serie serie) {
 
         return new SerieDto(
@@ -30,6 +22,4 @@ public class SerieMapper {
             serie.getDate()
         );
     }
-
-    
 }

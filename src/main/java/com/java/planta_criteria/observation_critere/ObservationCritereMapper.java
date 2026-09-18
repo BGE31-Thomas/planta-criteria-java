@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 import com.java.planta_criteria.critere.CritereMapper;
 import com.java.planta_criteria.image.ImageMapper;
-import com.java.planta_criteria.observation.ObservationMapper;
+import com.java.planta_criteria.observation.ObservationSummaryMapper;
 import com.java.planta_criteria.observation_critere.dto.ObservationCritereDto;
 import com.java.planta_criteria.statut.StatutMapper;
 
@@ -13,18 +13,18 @@ public class ObservationCritereMapper {
 
     private final ImageMapper imageMapper;
     private final CritereMapper critereMapper;
-    private final ObservationMapper observationMapper;
+    private final ObservationSummaryMapper observationSummaryMapper;
     private final StatutMapper statutMapper;
 
     public ObservationCritereMapper(
         ImageMapper imageMapper,
         CritereMapper critereMapper,
-        ObservationMapper observationMapper,
+        ObservationSummaryMapper observationSummaryMapper,
         StatutMapper statutMapper
     ) {
         this.imageMapper = imageMapper;
         this.critereMapper = critereMapper;
-        this.observationMapper = observationMapper;
+        this.observationSummaryMapper = observationSummaryMapper;
         this.statutMapper = statutMapper;
     }
 
@@ -35,7 +35,7 @@ public class ObservationCritereMapper {
         return new ObservationCritereDto(
             observationCritere.getId(),
 
-            observationMapper.toSummaryDto(
+            observationSummaryMapper.toSummaryDto(
                 observationCritere.getObservation()
             ),
 
