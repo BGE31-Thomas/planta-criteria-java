@@ -30,7 +30,14 @@ public class TaxrefController {
             defaultValue = ""
         ) String query
     ) {
-        return taxrefService.search(query);
+        List<PlantSearchDto> results = taxrefService.search(query);
+
+        System.out.println(">>> SEARCH : " + query);
+        System.out.println(">>> RESULTS : " + results.size());
+        System.out.println(">>> FIRST : " +
+        (results.isEmpty() ? "none" : results.get(0)));
+
+        return results;
     }
 
     /**

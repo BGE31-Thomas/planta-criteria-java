@@ -46,8 +46,7 @@ public class AuthService {
             userRepository.findByEmail(request.email())
                 .orElseThrow();
 
-        String token =
-            jwtService.generateToken(userDetails);
+        String token = jwtService.generateToken(userDetails);
 
         return new AuthResponse(
             token,

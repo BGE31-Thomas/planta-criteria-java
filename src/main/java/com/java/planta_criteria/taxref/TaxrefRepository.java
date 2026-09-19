@@ -7,7 +7,5 @@ import java.util.List;
 public interface TaxrefRepository
     extends JpaRepository<Taxref, Integer> {
 
-    List<Taxref> findByCdNom(Integer cdNom);
-
     List<Taxref> findTop20ByLbNomContainingIgnoreCase(String q);
 }

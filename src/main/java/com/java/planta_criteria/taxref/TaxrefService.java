@@ -28,11 +28,16 @@ public class TaxrefService {
             return List.of();
         }
 
-        return taxrefRepository
+        System.out.println(">>> SEARCH ATTEINT");
+        System.out.println(">>> q = " + query);
+
+        List<PlantSearchDto> results = taxrefRepository
             .findTop20ByLbNomContainingIgnoreCase(query)
             .stream()
             .map(taxrefMapper::toSearchDto)
             .toList();
+        System.out.println(">>> RÉSULTATS : " + results.size());
+        return results;
     }
 
     public PlantDto findById(Integer id) {
