@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @Transactional(readOnly = true)
@@ -32,7 +33,10 @@ public class ObservationCritereService {
     public ObservationCritereDto findById(Integer id) {
 
         ObservationCritere observationCritere =
-            repository.findById(id)
+            repository.findById(Objects.requireNonNull(
+            id,
+            "L'identifiant du critère ne peut pas être null"
+        ))
                 .orElseThrow(() ->
                     new ObservationCritereNotFoundException(id)
                 );

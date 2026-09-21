@@ -1,12 +1,8 @@
 package com.java.planta_criteria.observation;
 
-import com.java.planta_criteria.critere.Critere;
-import com.java.planta_criteria.critere.CritereRepository;
 import com.java.planta_criteria.observation.dto.ObservationCreateDto;
 import com.java.planta_criteria.observation.dto.ObservationDto;
-import com.java.planta_criteria.observation_critere.ObservationCritere;
-import com.java.planta_criteria.statut.Statut;
-import com.java.planta_criteria.statut.StatutRepository;
+
 import com.java.planta_criteria.taxref.Taxref;
 import com.java.planta_criteria.taxref.TaxrefRepository;
 import org.springframework.stereotype.Service;
@@ -16,11 +12,10 @@ import com.java.planta_criteria.serie.Serie;
 import com.java.planta_criteria.serie.SerieRepository;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class ObservationService {
-
-    private static final String STATUT_NON_VERIFIE = "Non vérifié";
 
     private final ObservationRepository observationRepository;
     private final ObservationMapper observationMapper;
@@ -51,7 +46,10 @@ public class ObservationService {
     @Transactional(readOnly = true)
     public ObservationDto findById(Integer id) {
 
-        Observation observation = observationRepository.findById(id)
+        Observation observation = observationRepository.findById(Objects.requireNonNull(
+            id,
+            "L'identifiant de l'observation ne peut pas être null"
+        ))
             .orElseThrow(() ->
                 new ObservationNotFoundException(id)
             );
@@ -62,14 +60,20 @@ public class ObservationService {
     @Transactional
     public ObservationDto create(ObservationCreateDto dto) {
 
-        Taxref plante = taxrefRepository.findById(dto.getPlanteId())
+        Taxref plante = taxrefRepository.findById(Objects.requireNonNull(
+            dto.getPlanteId(),
+            "L'identifiant de la plante ne peut pas être null"
+        ))
             .orElseThrow(() ->
                 new IllegalArgumentException(
                     "Plante introuvable : " + dto.getPlanteId()
                 )
             );
 
-        Serie serie = serieRepository.findById(dto.getSerieId())
+        Serie serie = serieRepository.findById(Objects.requireNonNull(
+            dto.getSerieId(),
+            "L'identifiant de la série ne peut pas être null"
+        ))
             .orElseThrow(() ->
                 new IllegalArgumentException(
                     "Série introuvable : " + dto.getSerieId()

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @Transactional(readOnly = true)
@@ -42,7 +43,10 @@ public class TaxrefService {
 
     public PlantDto findById(Integer id) {
 
-        Taxref taxref = taxrefRepository.findById(id)
+        Taxref taxref = taxrefRepository.findById(Objects.requireNonNull(
+            id,
+            "L'identifiant de la plante ne peut pas être null"
+        ))
             .orElseThrow(() ->
                 new TaxrefNotFoundException(id)
             );
@@ -52,7 +56,10 @@ public class TaxrefService {
 
     public PlantDto findByIdOrValidTaxon(Integer id) {
 
-        Taxref taxref = taxrefRepository.findById(id)
+        Taxref taxref = taxrefRepository.findById(Objects.requireNonNull(
+            id,
+            "L'identifiant de la plante ne peut pas être null"
+        ))
             .orElseThrow(() ->
                 new TaxrefNotFoundException(id)
             );

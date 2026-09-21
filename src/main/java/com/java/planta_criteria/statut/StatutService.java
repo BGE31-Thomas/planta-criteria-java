@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @Transactional(readOnly = true)
@@ -31,7 +32,10 @@ public class StatutService {
 
     public StatutDto findById(Integer id) {
 
-        Statut statut = statutRepository.findById(id)
+        Statut statut = statutRepository.findById(Objects.requireNonNull(
+            id,
+            "L'identifiant du statut ne peut pas être null"
+        ))
             .orElseThrow(() ->
                 new StatutNotFoundException(id)
             );

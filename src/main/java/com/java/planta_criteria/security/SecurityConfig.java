@@ -38,21 +38,17 @@ public class SecurityConfig {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public AuthenticationProvider authenticationProvider(
+    AuthenticationProvider authenticationProvider(
         PasswordEncoder passwordEncoder
     ) {
 
         DaoAuthenticationProvider provider =
-            new DaoAuthenticationProvider();
-
-        provider.setUserDetailsService(
-            userDetailsService
-        );
+            new DaoAuthenticationProvider(userDetailsService);
 
         provider.setPasswordEncoder(
             passwordEncoder
@@ -62,7 +58,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(
+    AuthenticationManager authenticationManager(
         AuthenticationProvider authenticationProvider
     ) {
         return new ProviderManager(
@@ -71,7 +67,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(
+    SecurityFilterChain securityFilterChain(
         HttpSecurity http,
         AuthenticationProvider authenticationProvider
     ) throws Exception {

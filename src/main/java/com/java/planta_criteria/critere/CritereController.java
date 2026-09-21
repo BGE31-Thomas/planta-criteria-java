@@ -1,6 +1,7 @@
 package com.java.planta_criteria.critere;
 
 import com.java.planta_criteria.critere.dto.CritereDto;
+import com.java.planta_criteria.critere.dto.CritereCreateDto;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 

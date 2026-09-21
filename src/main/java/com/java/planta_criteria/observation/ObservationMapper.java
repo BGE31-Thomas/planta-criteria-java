@@ -3,13 +3,10 @@ package com.java.planta_criteria.observation;
 import org.springframework.stereotype.Component;
 
 import com.java.planta_criteria.observation.dto.ObservationDto;
-import com.java.planta_criteria.observation.dto.ObservationSummaryDto;
 import com.java.planta_criteria.observation_critere.ObservationCritereMapper;
 import com.java.planta_criteria.serie.SerieMapper;
 import com.java.planta_criteria.taxref.TaxrefMapper;
 
-import java.time.ZoneId;
-import java.util.Date;
 
 @Component
 public class ObservationMapper {
@@ -33,12 +30,13 @@ public class ObservationMapper {
         return new ObservationDto(
             observation.getId(),
             serieMapper.toSearchDto(observation.getSerie()),
-            observation.getPlante() != null ? taxrefMapper.toDto(observation.getPlante()) : null,
+            observation.getPlante() != null
+                ? taxrefMapper.toSearchDto(observation.getPlante())
+                : null,
             observation.getObservationsCritere()
                 .stream()
                 .map(observationCritereMapper::toSearchDto)
                 .toList()
         );
     }
-
 }

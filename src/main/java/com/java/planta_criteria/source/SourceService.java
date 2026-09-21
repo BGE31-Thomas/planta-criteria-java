@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @Transactional(readOnly = true)
@@ -31,7 +32,10 @@ public class SourceService {
 
     public SourceDto findById(Integer id) {
 
-        Source source = sourceRepository.findById(id)
+        Source source = sourceRepository.findById(Objects.requireNonNull(
+            id,
+            "L'identifiant de la source ne peut pas être null"
+        ))
             .orElseThrow(() ->
                 new SourceNotFoundException(id)
             );

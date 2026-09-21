@@ -1,7 +1,5 @@
 package com.java.planta_criteria.user;
 
-import com.java.planta_criteria.user.Users;
-import com.java.planta_criteria.user.UserRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.stereotype.Service;

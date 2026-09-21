@@ -5,10 +5,15 @@ import com.java.planta_criteria.critere.dto.CritereDto;
 import com.java.planta_criteria.source.SourceRepository;
 import com.java.planta_criteria.taxref.Taxref;
 import com.java.planta_criteria.taxref.TaxrefRepository;
+
+import io.micrometer.common.lang.NonNull;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.java.planta_criteria.source.Source;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @Transactional(readOnly = true)
@@ -31,9 +36,9 @@ public class CritereService {
         this.sourceRepository = sourceRepository;
     }
 
-    public CritereDto findById(Integer id) {
+    public CritereDto findById(@NonNull Integer id) {
 
-        Critere critere = critereRepository.findById(id)
+        Critere critere = critereRepository.findById(Objects.requireNonNull(id, "L'identifiant du critère ne peut pas être null"))
             .orElseThrow(() ->
                 new CritereNotFoundException(id)
             );
@@ -41,9 +46,11 @@ public class CritereService {
         return critereMapper.toSearchDto(critere);
     }
 
-    public List<CritereDto> findByPlante(Integer planteId) {
+    public List<CritereDto> findByPlante(@NonNull Integer planteId) {
 
-        Taxref plante = taxrefRepository.findById(planteId)
+        Taxref plante = taxrefRepository.findById(
+            Objects.requireNonNull(planteId, "L'identifiant de la plante ne peut pas être null")
+        )
             .orElseThrow(() ->
                 new IllegalArgumentException(
                     "Plante introuvable : " + planteId
@@ -60,14 +67,22 @@ public class CritereService {
     @Transactional
     public CritereDto create(CritereCreateDto dto) {
 
-        Taxref plante = taxrefRepository.findById(dto.getPlanteId())
+        Integer planteId = Objects.requireNonNull(
+            dto.getPlante_id(),
+            "L'identifiant de la plante ne peut pas être null"
+        );
+
+        Taxref plante = taxrefRepository.findById(planteId)
             .orElseThrow(() ->
                 new IllegalArgumentException(
-                    "Plante introuvable : " + dto.getPlanteId()
+                    "Plante introuvable : " + planteId
                 )
             );
 
-        Source source = sourceRepository.findById(dto.getSource_id())
+        Source source = sourceRepository.findById(Objects.requireNonNull(
+            dto.getSource_id(),
+            "L'identifiant de la source ne peut pas être null"
+        ))
             .orElseThrow(() ->
                 new IllegalArgumentException(
                     "Source introuvable : " + dto.getSource_id()
@@ -82,7 +97,7 @@ public class CritereService {
         critere.setDescription(dto.getDescription());
 
         Critere saved =
-            critereRepository.save(observation);
+            critereRepository.save(critere);
 
         return critereMapper.toSearchDto(saved);
     }

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @Transactional(readOnly = true)
@@ -31,7 +32,10 @@ public class ImageService {
 
     public ImageDto findById(Integer id) {
 
-        Image image = imageRepository.findById(id)
+        Image image = imageRepository.findById(Objects.requireNonNull(
+            id,
+            "L'identifiant de l'image ne peut pas être null"
+        ))
             .orElseThrow(() ->
                 new ImageNotFoundException(id)
             );
