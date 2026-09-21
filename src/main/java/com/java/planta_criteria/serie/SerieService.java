@@ -1,7 +1,6 @@
 package com.java.planta_criteria.serie;
 
 import com.java.planta_criteria.serie.dto.SerieCreateDto;
-import com.java.planta_criteria.serie.dto.SerieDto;
 import com.java.planta_criteria.serie.dto.SerieSearchDto;
 
 import java.util.Objects;

@@ -5,8 +5,6 @@ import org.springframework.stereotype.Component;
 import com.java.planta_criteria.taxref.dto.PlantDto;
 import com.java.planta_criteria.taxref.dto.PlantSearchDto;
 
-import com.java.planta_criteria.critere.CritereMapper;
-
 @Component
 public class TaxrefMapper {
 

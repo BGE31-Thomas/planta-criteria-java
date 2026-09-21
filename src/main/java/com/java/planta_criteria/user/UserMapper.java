@@ -2,7 +2,6 @@ package com.java.planta_criteria.user;
 
 import com.java.planta_criteria.user.dto.UserDto;
 import org.springframework.stereotype.Component;
-import com.java.planta_criteria.user.Users;
 
 import java.util.HashSet;
 

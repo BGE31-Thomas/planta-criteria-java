@@ -3,10 +3,6 @@ package com.java.planta_criteria.user;
 import com.java.planta_criteria.user.dto.UserDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.java.planta_criteria.user.Users;
-
-import com.java.planta_criteria.user.UserRepository;
-import com.java.planta_criteria.user.UserMapper;
 
 @Service
 public class UserService {
