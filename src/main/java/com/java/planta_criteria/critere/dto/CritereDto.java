@@ -5,6 +5,9 @@ import java.util.List;
 import com.java.planta_criteria.image.dto.ImageDto;
 import com.java.planta_criteria.source.dto.SourceDto;
 
+import com.java.planta_criteria.taxref.Taxref;
+import com.java.planta_criteria.taxref.dto.PlantDto;
+
 public class CritereDto {
 
     private Integer id;
@@ -13,15 +16,18 @@ public class CritereDto {
 
     private SourceDto source;
     private List<ImageDto> images;
+
+    private PlantDto plante;
     
     public CritereDto() {
     }
 
-    public CritereDto(Integer id, String organe, String description, SourceDto source, List<ImageDto> images) {
+    public CritereDto(Integer id, String organe, String description, SourceDto source, PlantDto plante, List<ImageDto> images) {
         this.id = id;
         this.organe = organe;
         this.description = description;
         this.source = source;
+        this.plante = plante;
         this.images = images;
     }
 
@@ -51,5 +57,12 @@ public class CritereDto {
     }
     public List<ImageDto> getImages() {
         return images;
+    }
+
+    public PlantDto getPlante() {
+        return plante;
+    }
+    public void setPlante(PlantDto plante) {
+        this.plante = plante;
     }
 }

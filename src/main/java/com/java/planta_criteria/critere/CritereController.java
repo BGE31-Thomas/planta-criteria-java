@@ -31,4 +31,12 @@ public class CritereController {
     ) {
         return critereService.findByPlante(planteId);
     }
+
+    @PostMapping
+    @PreAuthorize("hasRole('USER')")
+    public CritereDto create(
+        @RequestBody CritereCreateDto dto
+    ) {
+        return critereService.create(dto);
+    }
 }
