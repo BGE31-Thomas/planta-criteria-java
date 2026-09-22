@@ -1,14 +1,14 @@
 package com.java.planta_criteria.image;
 
-import com.java.planta_criteria.image.dto.ImageDto;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/api/images")
-@PreAuthorize("hasRole('USER')")
 public class ImageController {
 
     private final ImageService imageService;
@@ -17,15 +17,22 @@ public class ImageController {
         this.imageService = imageService;
     }
 
-    @GetMapping
-    public List<ImageDto> findAll() {
-        return imageService.findAll();
-    }
+    @PostMapping(
+        value = "/upload",
+        consumes = MediaType.MULTIPART_FORM_DATA_VALUE
+    )
+    public ResponseEntity<Image> upload(
+        @RequestParam("file") MultipartFile file,
+        @RequestParam("observationCritereId")
+        Integer observationCritereId
+    ) throws IOException {
 
-    @GetMapping("/{id}")
-    public ImageDto findById(
-        @PathVariable Integer id
-    ) {
-        return imageService.findById(id);
+        Image image =
+            imageService.upload(
+                file,
+                observationCritereId
+            );
+
+        return ResponseEntity.ok(image);
     }
 }

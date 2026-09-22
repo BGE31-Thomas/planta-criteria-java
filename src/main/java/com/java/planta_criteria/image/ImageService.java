@@ -1,45 +1,94 @@
 package com.java.planta_criteria.image;
 
-import com.java.planta_criteria.image.dto.ImageDto;
+
+import net.coobird.thumbnailator.Thumbnails;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
-import java.util.Objects;
+import com.java.planta_criteria.observation_critere.ObservationCritere;
+import com.java.planta_criteria.observation_critere.ObservationCritereRepository;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.UUID;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional
 public class ImageService {
 
-    private final ImageRepository imageRepository;
-    private final ImageMapper imageMapper;
+    private final ObservationCritereRepository observationCritereRepository;
+
+    @Value("${app.upload.dir}")
+    private String uploadDir;
 
     public ImageService(
-        ImageRepository imageRepository,
-        ImageMapper imageMapper
+        ObservationCritereRepository observationCritereRepository
     ) {
-        this.imageRepository = imageRepository;
-        this.imageMapper = imageMapper;
+        this.observationCritereRepository =
+            observationCritereRepository;
     }
 
-    public List<ImageDto> findAll() {
+    public Image upload(
+        MultipartFile file,
+        Integer observationCritereId
+    ) throws IOException {
 
-        return imageRepository.findAll()
-            .stream()
-            .map(imageMapper::toSearchDto)
-            .toList();
-    }
-
-    public ImageDto findById(Integer id) {
-
-        Image image = imageRepository.findById(Objects.requireNonNull(
-            id,
-            "L'identifiant de l'image ne peut pas être null"
-        ))
-            .orElseThrow(() ->
-                new ImageNotFoundException(id)
+        if (file.isEmpty()) {
+            throw new IllegalArgumentException(
+                "Le fichier est vide."
             );
+        }
 
-        return imageMapper.toSearchDto(image);
+        if (
+            file.getContentType() == null
+            || !file.getContentType().startsWith("image/")
+        ) {
+            throw new IllegalArgumentException(
+                "Le fichier doit être une image."
+            );
+        }
+
+        ObservationCritere observationCritere =
+            observationCritereRepository
+                .findById(observationCritereId)
+                .orElseThrow(() ->
+                    new IllegalArgumentException(
+                        "ObservationCritere introuvable : "
+                        + observationCritereId
+                    )
+                );
+
+        Path directory =
+            Paths.get(uploadDir);
+
+        Files.createDirectories(directory);
+
+        String filename =
+            UUID.randomUUID() + ".webp";
+
+        Path destination =
+            directory.resolve(filename);
+
+        Thumbnails
+            .of(file.getInputStream())
+            .size(250, 250)
+            .outputFormat("webp")
+            .toFile(destination.toFile());
+
+        Image image = new Image();
+
+        image.setChemin(filename);
+
+        observationCritere.addImage(image);
+
+        observationCritereRepository.save(
+            observationCritere
+        );
+
+        return image;
     }
 }

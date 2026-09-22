@@ -30,6 +30,19 @@ public class Image {
     @JoinColumn(name = "observation_critere_id")
     private ObservationCritere observationCritere;
 
+    public Image(){
+
+    }
+
+    public Image(Integer id, String chemin, String auteur, String description, Critere critere, ObservationCritere observationCritere){
+        this.id = id;
+        this.chemin = chemin;
+        this.auteur = auteur;
+        this.description = description;
+        this.critere = critere;
+        this.observationCritere = observationCritere;
+    }
+
     public Integer getId() {
         return id;
     }
