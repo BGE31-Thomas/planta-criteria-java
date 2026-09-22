@@ -1,5 +1,8 @@
 package com.java.planta_criteria.user;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.stereotype.Service;
@@ -26,12 +29,15 @@ public class CustomUserDetailsService implements UserDetailsService {
                 )
             );
 
-        return org.springframework.security.core.userdetails.User.builder()
+        Set<String> roles = new HashSet<>(user.getRoles());
+        roles.add("ROLE_USER");
+
+        return org.springframework.security.core.userdetails.User
+            .builder()
             .username(user.getEmail())
             .password(user.getPassword())
             .authorities(
-                user.getRoles()
-                    .stream()
+                roles.stream()
                     .map(SimpleGrantedAuthority::new)
                     .toList()
             )

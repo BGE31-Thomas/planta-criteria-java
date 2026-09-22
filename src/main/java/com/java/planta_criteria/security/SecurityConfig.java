@@ -88,7 +88,6 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
 
                 .requestMatchers(
-                    "/login",
                     "/api/auth/**",
                     "/api/communes/**"
                 ).permitAll()

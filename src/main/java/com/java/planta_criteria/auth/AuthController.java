@@ -5,6 +5,7 @@ import com.java.planta_criteria.auth.dto.LoginRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@RequestMapping("/api/auth")
 @RestController
 public class AuthController {
 
@@ -18,9 +19,7 @@ public class AuthController {
     public ResponseEntity<AuthResponse> login(
             @RequestBody LoginRequest request
     ) {
-
         AuthResponse response = authService.login(request);
-
         return ResponseEntity.ok(response);
     }
 }
