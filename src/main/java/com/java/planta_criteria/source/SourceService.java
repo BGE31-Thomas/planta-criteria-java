@@ -42,4 +42,40 @@ public class SourceService {
 
         return sourceMapper.toSearchDto(source);
     }
+
+    @Transactional
+    public SourceDto create(SourceDto dto) {
+
+        Source source = new Source();
+
+        source.setAuteur(dto.getAuteur());
+        source.setAnnee(dto.getAnnee());
+        source.setTitre(dto.getTitre());
+
+        Source saved =
+            sourceRepository.save(source);
+
+        return sourceMapper.toSearchDto(saved);
+    }
+
+    @Transactional
+    public SourceDto update(Integer source_id, SourceDto dto) {
+
+        Source source = sourceRepository.findById(Objects.requireNonNull(
+            source_id,
+            "L'identifiant de la série ne peut pas être null"
+        ))
+            .orElseThrow(() ->
+                new SourceNotFoundException(source_id)
+            );;
+
+        source.setTitre(dto.getTitre());
+        source.setAuteur(dto.getAuteur());
+        source.setTitre(dto.getTitre());
+
+        Source saved =
+            sourceRepository.save(source);
+
+        return sourceMapper.toSearchDto(saved);
+    }
 }

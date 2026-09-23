@@ -17,16 +17,32 @@ public class SourceController {
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('USER')")
     public List<SourceDto> findAll() {
         return sourceService.findAll();
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('USER')")
     public SourceDto findById(
         @PathVariable Integer id
     ) {
         return sourceService.findById(id);
+    }
+
+    @PostMapping
+    @PreAuthorize("hasRole('USER')")
+    public SourceDto create(
+        @RequestBody SourceDto dto
+    ) {
+        return sourceService.create(dto);
+    }
+
+    @PutMapping("/{id}")
+    public SourceDto update(
+        @PathVariable Integer id,
+        @RequestBody SourceDto dto
+    ) {
+        return sourceService.update(id, dto);
     }
 }

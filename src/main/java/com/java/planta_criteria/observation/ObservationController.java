@@ -2,6 +2,8 @@ package com.java.planta_criteria.observation;
 
 import com.java.planta_criteria.observation.dto.ObservationCreateDto;
 import com.java.planta_criteria.observation.dto.ObservationDto;
+import com.java.planta_criteria.observation.dto.ObservationUpdateDto;
+
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,5 +39,13 @@ public class ObservationController {
         @RequestBody ObservationCreateDto dto
     ) {
         return observationService.create(dto);
+    }
+
+    @PutMapping("/{id}")
+    public ObservationDto update(
+        @PathVariable Integer id,
+        @RequestBody ObservationUpdateDto dto
+    ) {
+        return observationService.update(id, dto);
     }
 }

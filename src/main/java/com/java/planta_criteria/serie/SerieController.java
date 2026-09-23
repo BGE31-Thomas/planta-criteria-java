@@ -1,7 +1,9 @@
 package com.java.planta_criteria.serie;
 
 import com.java.planta_criteria.serie.dto.SerieSearchDto;
+import com.java.planta_criteria.serie.dto.SerieSummaryDto;
 import com.java.planta_criteria.serie.dto.SerieCreateDto;
+
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,5 +31,13 @@ public class SerieController {
         @RequestBody SerieCreateDto dto
     ) {
         return serieService.create(dto);
+    }
+
+    @PutMapping("/{id}")
+    public SerieSearchDto update(
+        @PathVariable Integer id,
+        @RequestBody SerieSummaryDto dto
+    ) {
+        return serieService.update(id, dto);
     }
 }

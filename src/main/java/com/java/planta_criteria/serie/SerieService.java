@@ -2,6 +2,7 @@ package com.java.planta_criteria.serie;
 
 import com.java.planta_criteria.serie.dto.SerieCreateDto;
 import com.java.planta_criteria.serie.dto.SerieSearchDto;
+import com.java.planta_criteria.serie.dto.SerieSummaryDto;
 
 import java.util.Objects;
 
@@ -44,6 +45,27 @@ public class SerieService {
         serie.setIntitule(dto.getIntitule());
         serie.setLieu(dto.getLieu());
         serie.setDate(dto.getDate());
+
+        Serie saved =
+            serieRepository.save(serie);
+
+        return serieMapper.toSearchDto(saved);
+    }
+
+    @Transactional
+    public SerieSearchDto update(Integer serie_id,SerieSummaryDto dto) {
+
+        Serie serie = serieRepository.findById(Objects.requireNonNull(
+            serie_id,
+            "L'identifiant de la série ne peut pas être null"
+        ))
+            .orElseThrow(() ->
+                new SerieNotFoundException(serie_id)
+            );;
+
+        serie.setIntitule(dto.intitule());
+        serie.setLieu(dto.lieu());
+        serie.setDate(dto.date());
 
         Serie saved =
             serieRepository.save(serie);
