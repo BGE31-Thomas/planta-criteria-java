@@ -19,6 +19,7 @@ public class UserDto {
         this.username = username;
         this.roles = roles;
         this.verified = verified;
+        
     }
     
     public Integer getId() {

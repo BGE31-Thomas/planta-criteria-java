@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import com.java.planta_criteria.serie.dto.SerieDto;
 import com.java.planta_criteria.serie.dto.SerieSearchDto;
+import com.java.planta_criteria.user.UserMapper;
 import com.java.planta_criteria.observation.dto.ObservationDto;
 
 
@@ -13,12 +14,19 @@ import com.java.planta_criteria.observation.dto.ObservationDto;
 @Component
 public class SerieMapper {
 
+    private UserMapper userMapper;
+
+    public SerieMapper(UserMapper userMapper){
+        this.userMapper = userMapper;
+    }
+
     public SerieSearchDto toSearchDto(Serie serie) {
         return new SerieSearchDto(
             serie.getId(),
             serie.getIntitule(),
             serie.getLieu(),
-            serie.getDate()
+            serie.getDate(),
+            userMapper.toDto(serie.getUser())
         );
     }
 
@@ -28,6 +36,7 @@ public class SerieMapper {
             serie.getIntitule(),
             serie.getLieu(),
             serie.getDate(),
+            userMapper.toDto(serie.getUser()),
             observations
         );
     }

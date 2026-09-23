@@ -2,22 +2,26 @@ package com.java.planta_criteria.serie.dto;
 
 import java.time.LocalDate;
 
+import com.java.planta_criteria.user.dto.UserDto;
+
 
 public class SerieCreateDto{
 
     private String intitule;
     private String lieu;
     private LocalDate date;
+    private UserDto user;
 
     public SerieCreateDto(){
 
     }
 
-    public SerieCreateDto(String intitule, String lieu, LocalDate date){
+    public SerieCreateDto(String intitule, String lieu, LocalDate date, UserDto user){
 
         this.intitule = intitule;
         this.lieu = lieu;
         this.date = date;
+        this.user = user;
 
     }
 
@@ -43,6 +47,14 @@ public class SerieCreateDto{
 
     public void setDate(LocalDate date){
         this.date = date;
+    }
+
+    public UserDto getUser() {
+        return user;
+    }
+
+    public void setUser(UserDto user) {
+        this.user = user;
     }
 }
 

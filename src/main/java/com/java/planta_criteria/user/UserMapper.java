@@ -16,6 +16,7 @@ public class UserMapper {
             user.getUsername(),
             new HashSet<>(user.getRoles()),
             user.isVerified()
+
         );
     }
 }

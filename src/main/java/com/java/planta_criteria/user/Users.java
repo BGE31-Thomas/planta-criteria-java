@@ -2,8 +2,10 @@ package com.java.planta_criteria.user;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.hibernate.annotations.JdbcTypeCode;
@@ -11,6 +13,8 @@ import org.hibernate.type.SqlTypes;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import com.java.planta_criteria.serie.Serie;
 
 
 @Entity
@@ -43,13 +47,32 @@ public class Users implements UserDetails{
     @Column(name = "reset_token")
     private String resetToken;
 
-    /*
-     * Équivalent du champ JSON roles de Symfony.
-     */
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(name = "roles", columnDefinition = "json")
     private Set<String> roles = new HashSet<>();
 
+
+    @OneToMany(
+        mappedBy = "user",
+        cascade = CascadeType.ALL,
+        orphanRemoval = true
+    )
+    private List<Serie> series = new ArrayList<>();
+
+
+    public List<Serie> getSeries() {
+        return series;
+    }
+
+    public void addSerie(Serie serie) {
+        series.add(serie);
+        serie.setUser(this);
+    }
+
+    public void removeSerie(Serie serie) {
+        series.remove(serie);
+        serie.setUser(null);
+    }
 
     public Users() {
     }
@@ -141,4 +164,6 @@ public class Users implements UserDetails{
     public boolean isEnabled() {
         return isVerified;
     }
+
+    
 }

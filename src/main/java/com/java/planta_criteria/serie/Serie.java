@@ -1,6 +1,8 @@
 package com.java.planta_criteria.serie;
 
 import com.java.planta_criteria.observation.Observation;
+import com.java.planta_criteria.user.Users;
+
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -22,6 +24,10 @@ public class Serie {
 
     @Column(nullable = false)
     private LocalDate date;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private Users user;
 
     @OneToMany(
         mappedBy = "serie",
@@ -79,6 +85,14 @@ public class Serie {
                 observation.setSerie(null);
             }
         }
+    }
+
+    public Users getUser() {
+        return user;
+    }
+
+    public void setUser(Users user) {
+        this.user = user;
     }
 
 }
