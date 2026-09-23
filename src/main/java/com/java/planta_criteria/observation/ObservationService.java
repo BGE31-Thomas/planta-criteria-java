@@ -3,7 +3,6 @@ package com.java.planta_criteria.observation;
 import com.java.planta_criteria.observation.dto.ObservationCreateDto;
 import com.java.planta_criteria.observation.dto.ObservationDto;
 import com.java.planta_criteria.observation.dto.ObservationUpdateDto;
-import com.java.planta_criteria.observation.ObservationNotFoundException;
 
 import com.java.planta_criteria.taxref.Taxref;
 import com.java.planta_criteria.taxref.TaxrefRepository;

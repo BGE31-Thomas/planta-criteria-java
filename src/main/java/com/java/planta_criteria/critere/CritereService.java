@@ -3,7 +3,6 @@ package com.java.planta_criteria.critere;
 import com.java.planta_criteria.critere.dto.CritereCreateDto;
 import com.java.planta_criteria.critere.dto.CritereDto;
 import com.java.planta_criteria.critere.dto.CritereUpdateDto;
-import com.java.planta_criteria.critere.CritereNotFoundException;
 
 import com.java.planta_criteria.source.SourceRepository;
 import com.java.planta_criteria.source.SourceNotFoundException;
