@@ -2,6 +2,8 @@ package com.java.planta_criteria.taxref;
 
 import com.java.planta_criteria.taxref.dto.PlantDto;
 import com.java.planta_criteria.taxref.dto.PlantSearchDto;
+import com.java.planta_criteria.utils.SlugUtils;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,22 +49,26 @@ public class TaxrefService {
             id,
             "L'identifiant de la plante ne peut pas être null"
         ))
-            .orElseThrow(() ->
-                new TaxrefNotFoundException(id)
-            );
+        .orElseThrow(() ->
+            new TaxrefNotFoundException(id)
+        );
 
         return taxrefMapper.toDto(taxref);
     }
 
-    public PlantDto findByIdOrValidTaxon(Integer id) {
+    public PlantDto findByIdOrValidTaxon(Integer id, String slug) {
 
         Taxref taxref = taxrefRepository.findById(Objects.requireNonNull(
             id,
             "L'identifiant de la plante ne peut pas être null"
         ))
-            .orElseThrow(() ->
-                new TaxrefNotFoundException(id)
-            );
+        .orElseThrow(() ->
+            new TaxrefNotFoundException(id)
+        );
+
+        if(SlugUtils.toSlug(taxref.getLbNom()).equals(slug) == false) {
+            throw new IllegalArgumentException("Le slug fourni ne correspond pas au nom vernaculaire de la plante");
+        }
 
         if (!taxref.getCdNom().equals(taxref.getCdRef())) {
             taxref = taxref.getNomValide();

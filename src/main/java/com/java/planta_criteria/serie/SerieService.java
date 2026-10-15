@@ -3,6 +3,7 @@ package com.java.planta_criteria.serie;
 import com.java.planta_criteria.serie.dto.SerieCreateDto;
 import com.java.planta_criteria.serie.dto.SerieSearchDto;
 import com.java.planta_criteria.serie.dto.SerieSummaryDto;
+import com.java.planta_criteria.utils.SlugUtils;
 
 import java.util.Objects;
 
@@ -24,15 +25,19 @@ public class SerieService {
         this.serieMapper = serieMapper;
     }
 
-    public SerieSearchDto findById(Integer id) {
+    public SerieSearchDto findById(Integer id, String slug) {
 
         Serie serie = serieRepository.findById(Objects.requireNonNull(
             id,
             "L'identifiant de la série ne peut pas être null"
         ))
-            .orElseThrow(() ->
-                new SerieNotFoundException(id)
-            );
+        .orElseThrow(() ->
+            new SerieNotFoundException(id)
+        );
+        
+        if(SlugUtils.toSlug(serie.getIntitule()).equals(slug) == false) {
+            throw new IllegalArgumentException("Le slug fourni ne correspond pas à l'intitulé de la série");
+        }
 
         return serieMapper.toSearchDto(serie);
     }
@@ -53,15 +58,19 @@ public class SerieService {
     }
 
     @Transactional
-    public SerieSearchDto update(Integer serie_id,SerieSummaryDto dto) {
+    public SerieSearchDto update(Integer serie_id,SerieSummaryDto dto,String slug) {
 
         Serie serie = serieRepository.findById(Objects.requireNonNull(
             serie_id,
             "L'identifiant de la série ne peut pas être null"
         ))
-            .orElseThrow(() ->
-                new SerieNotFoundException(serie_id)
-            );;
+        .orElseThrow(() ->
+            new SerieNotFoundException(serie_id)
+        );;
+
+        if(SlugUtils.toSlug(serie.getIntitule()).equals(slug) == false) {
+            throw new IllegalArgumentException("Le slug fourni ne correspond pas à l'intitulé de la série");
+        }
 
         serie.setIntitule(dto.intitule());
         serie.setLieu(dto.lieu());

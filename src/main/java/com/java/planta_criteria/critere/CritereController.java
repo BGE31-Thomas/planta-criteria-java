@@ -27,12 +27,13 @@ public class CritereController {
         return critereService.findById(id);
     }
 
-    @GetMapping("/plante/{planteId}")
+    @GetMapping("/plante/{planteId}/{slug}")
     @PreAuthorize("hasRole('USER')")
     public List<CritereDto> findByPlante(
-        @PathVariable Integer planteId
+        @PathVariable Integer planteId,
+        @PathVariable String slug
     ) {
-        return critereService.findByPlante(planteId);
+        return critereService.findByPlante(planteId, slug);
     }
 
     @PostMapping
@@ -43,11 +44,12 @@ public class CritereController {
         return critereService.create(dto);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{id}/{slug}")
     public CritereDto update(
         @PathVariable Integer id,
+        @PathVariable String slug,
         @RequestBody CritereUpdateDto dto
     ) {
-        return critereService.update(id, dto);
+        return critereService.update(id, dto, slug);
     }
 }

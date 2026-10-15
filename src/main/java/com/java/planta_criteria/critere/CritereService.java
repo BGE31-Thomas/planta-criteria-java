@@ -9,6 +9,7 @@ import com.java.planta_criteria.source.SourceNotFoundException;
 
 import com.java.planta_criteria.taxref.Taxref;
 import com.java.planta_criteria.taxref.TaxrefRepository;
+import com.java.planta_criteria.utils.SlugUtils;
 import com.java.planta_criteria.taxref.TaxrefNotFoundException;
 
 import io.micrometer.common.lang.NonNull;
@@ -51,7 +52,7 @@ public class CritereService {
         return critereMapper.toSearchDto(critere);
     }
 
-    public List<CritereDto> findByPlante(@NonNull Integer planteId) {
+    public List<CritereDto> findByPlante(@NonNull Integer planteId, @NonNull String slug) {
 
         Taxref plante = taxrefRepository.findById(
             Objects.requireNonNull(planteId, "L'identifiant de la plante ne peut pas être null")
@@ -59,6 +60,10 @@ public class CritereService {
             .orElseThrow(() ->
                 new TaxrefNotFoundException(planteId)
             );
+
+        if(SlugUtils.toSlug(plante.getLbNom()).equals(slug) == false) {
+            throw new IllegalArgumentException("Le slug fourni ne correspond pas au nom vernaculaire de la plante");
+        }
 
         return critereRepository
             .findByPlante(plante)
@@ -102,7 +107,7 @@ public class CritereService {
     }
 
     @Transactional
-    public CritereDto update(Integer critere_id, CritereUpdateDto dto) {
+    public CritereDto update(Integer critere_id, CritereUpdateDto dto, String slug) {
 
         Integer planteId = Objects.requireNonNull(
             dto.plante_id(),
@@ -129,6 +134,10 @@ public class CritereService {
             .orElseThrow(() ->
                 new CritereNotFoundException(critere_id)
             );
+
+        if(SlugUtils.toSlug(critere.getDescription()).equals(slug) == false) {
+            throw new IllegalArgumentException("Le slug fourni ne correspond pas à la description de la plante");
+        }
 
         critere.setPlante(plante);
         critere.setSource(source);

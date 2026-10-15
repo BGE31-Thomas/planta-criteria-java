@@ -22,12 +22,13 @@ public class SourceController {
         return sourceService.findAll();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id}/{slug}")
     @PreAuthorize("hasRole('USER')")
     public SourceDto findById(
-        @PathVariable Integer id
+        @PathVariable Integer id,
+        @PathVariable String slug
     ) {
-        return sourceService.findById(id);
+        return sourceService.findById(id, slug);
     }
 
     @PostMapping
@@ -38,11 +39,13 @@ public class SourceController {
         return sourceService.create(dto);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{id}/{slug}")
+    @PreAuthorize("hasRole('USER')")
     public SourceDto update(
         @PathVariable Integer id,
+        @PathVariable String slug,
         @RequestBody SourceDto dto
     ) {
-        return sourceService.update(id, dto);
+        return sourceService.update(id, dto, slug);
     }
 }

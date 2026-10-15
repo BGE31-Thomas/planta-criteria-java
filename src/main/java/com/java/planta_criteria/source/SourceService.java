@@ -1,6 +1,8 @@
 package com.java.planta_criteria.source;
 
 import com.java.planta_criteria.source.dto.SourceDto;
+import com.java.planta_criteria.utils.SlugUtils;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,15 +32,19 @@ public class SourceService {
             .toList();
     }
 
-    public SourceDto findById(Integer id) {
+    public SourceDto findById(Integer id, String slug) {
 
         Source source = sourceRepository.findById(Objects.requireNonNull(
             id,
             "L'identifiant de la source ne peut pas être null"
         ))
-            .orElseThrow(() ->
-                new SourceNotFoundException(id)
-            );
+        .orElseThrow(() ->
+            new SourceNotFoundException(id)
+        );
+
+        if(SlugUtils.toSlug(source.getTitre()).equals(slug) == false) {
+            throw new IllegalArgumentException("Le slug fourni ne correspond pas au titre de la source");
+        }
 
         return sourceMapper.toSearchDto(source);
     }
@@ -59,7 +65,7 @@ public class SourceService {
     }
 
     @Transactional
-    public SourceDto update(Integer source_id, SourceDto dto) {
+    public SourceDto update(Integer source_id, SourceDto dto, String slug) {
 
         Source source = sourceRepository.findById(Objects.requireNonNull(
             source_id,
@@ -68,6 +74,10 @@ public class SourceService {
             .orElseThrow(() ->
                 new SourceNotFoundException(source_id)
             );;
+
+        if(SlugUtils.toSlug(source.getTitre()).equals(slug) == false) {
+            throw new IllegalArgumentException("Le slug fourni ne correspond pas au titre de la source");
+        }
 
         source.setTitre(dto.getTitre());
         source.setAuteur(dto.getAuteur());
