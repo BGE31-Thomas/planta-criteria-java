@@ -3,14 +3,14 @@ package com.java.planta_criteria.taxref.dto;
 public class PlantSearchDto {
 
     private Integer id;
-    private String lbNom;
+    private String nomCompletHtml;
 
     public PlantSearchDto() {
     }
 
-    public PlantSearchDto(Integer id, String lbNom) {
+    public PlantSearchDto(Integer id, String nomCompletHtml) {
         this.id = id;
-        this.lbNom = lbNom;
+        this.nomCompletHtml = nomCompletHtml;
     }
 
     public Integer getId() {
@@ -21,11 +21,11 @@ public class PlantSearchDto {
         this.id = id;
     }
 
-    public String getLbNom() {
-        return lbNom;
+    public String getNomCompletHtml() {
+        return nomCompletHtml;
     }
 
-    public void setLbNom(String lbNom) {
-        this.lbNom = lbNom;
+    public void setNomCompletHtml(String nomCompletHtml) {
+        this.nomCompletHtml = nomCompletHtml;
     }
 }

@@ -66,7 +66,9 @@ public class TaxrefService {
             new TaxrefNotFoundException(id)
         );
 
-        if(SlugUtils.toSlug(taxref.getLbNom()).equals(slug) == false) {
+        if(SlugUtils.toSlug(taxref.getNomCompletHtml()).equals(slug) == false) {
+            System.out.println(">>> nomCompletHtml : " + taxref.getNomCompletHtml());
+            System.out.println(">>> SLUGS : " + SlugUtils.toSlug(taxref.getNomCompletHtml()) + " / " + slug);
             throw new IllegalArgumentException("Le slug fourni ne correspond pas au nom vernaculaire de la plante");
         }
 

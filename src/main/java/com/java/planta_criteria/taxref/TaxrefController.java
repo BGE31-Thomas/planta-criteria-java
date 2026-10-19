@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api/plants")
 public class TaxrefController {
 
     private final TaxrefService taxrefService;
@@ -42,15 +43,15 @@ public class TaxrefController {
 
     /**
      * Détail d'une plante.
-     *
-     * Symfony :
-     * GET /plant/{id}
+     
      */
-    @GetMapping("/plant/{id}")
+    @GetMapping("/{id}/{slug}")
     @PreAuthorize("hasRole('USER')")
     public PlantDto findById(
-        @PathVariable Integer id
+        @PathVariable Integer id,
+        @PathVariable String slug
     ) {
-        return taxrefService.findByIdOrValidTaxon(id);
+        System.out.println(">>> FIND BY ID : " + id + " / " + slug);
+        return taxrefService.findByIdOrValidTaxon(id, slug);
     }
 }

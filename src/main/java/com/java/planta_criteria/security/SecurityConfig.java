@@ -19,6 +19,7 @@ import org.springframework.security.authentication.ProviderManager;
 
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfigurationSource;
 
 import com.java.planta_criteria.user.CustomUserDetailsService;
 
@@ -69,7 +70,8 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(
         HttpSecurity http,
-        AuthenticationProvider authenticationProvider
+        AuthenticationProvider authenticationProvider,
+        CorsConfigurationSource corsConfigurationSource
     ) throws Exception {
 
         http
@@ -87,17 +89,23 @@ public class SecurityConfig {
 
             .authorizeHttpRequests(auth -> auth
 
-                .requestMatchers(
-                    "/api/auth/**",
-                    "/api/communes/**"
-                ).permitAll()
+                // Endpoint de connexion accessible sans authentification.
+                .requestMatchers("/api/auth/login").permitAll()
 
+                .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**")
+                    .permitAll()
+
+                // Les autres routes nécessitent une authentification.
                 .anyRequest().authenticated()
             )
-
             .addFilterBefore(
                 jwtAuthenticationFilter,
                 UsernamePasswordAuthenticationFilter.class
+            )
+
+            
+            .cors(cors ->
+                cors.configurationSource(corsConfigurationSource)
             );
 
         return http.build();

@@ -17,12 +17,13 @@ public class SerieController {
         this.serieService = serieService;
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id}/{slug}")
     @PreAuthorize("hasRole('USER')")
     public SerieSearchDto findById(
-        @PathVariable Integer id
+        @PathVariable Integer id,
+        @PathVariable String slug
     ) {
-        return serieService.findById(id);
+        return serieService.findById(id, slug);
     }
 
     @PostMapping
@@ -33,11 +34,12 @@ public class SerieController {
         return serieService.create(dto);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{id}/{slug}")
     public SerieSearchDto update(
         @PathVariable Integer id,
+        @PathVariable String slug,
         @RequestBody SerieSummaryDto dto
     ) {
-        return serieService.update(id, dto);
+        return serieService.update(id, dto, slug);
     }
 }
