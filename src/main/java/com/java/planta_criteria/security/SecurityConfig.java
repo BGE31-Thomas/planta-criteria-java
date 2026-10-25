@@ -90,7 +90,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
 
                 // Endpoint de connexion accessible sans authentification.
-                .requestMatchers("/api/auth/login").permitAll()
+                .requestMatchers("/api/**").permitAll()
 
                 .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**")
                     .permitAll()

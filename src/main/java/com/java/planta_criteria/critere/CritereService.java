@@ -61,8 +61,10 @@ public class CritereService {
                 new TaxrefNotFoundException(planteId)
             );
 
-        if(SlugUtils.toSlug(plante.getLbNom()).equals(slug) == false) {
-            throw new IllegalArgumentException("Le slug fourni ne correspond pas au nom vernaculaire de la plante");
+        if(SlugUtils.toSlug(plante.getNomCompletHtml()).equals(slug) == false) {
+            System.out.println(">>> SLUG : " + slug);
+            System.out.println(">>> SLUG PLANTE : " + SlugUtils.toSlug(plante.getNomCompletHtml()));
+            throw new IllegalArgumentException("Le slug fourni ne correspond pas au nom complet de la plante");
         }
 
         return critereRepository
