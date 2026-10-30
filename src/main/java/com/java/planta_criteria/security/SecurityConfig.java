@@ -89,6 +89,8 @@ public class SecurityConfig {
 
             .authorizeHttpRequests(auth -> auth
 
+                .requestMatchers("/uploads/images/**").permitAll()
+
                 // Endpoint de connexion accessible sans authentification.
                 .requestMatchers("/api/**").permitAll()
 
