@@ -24,6 +24,12 @@ public class CritereMapper {
     }
 
     public CritereDto toSearchDto(Critere critere) {
+
+           System.out.println(
+                "Critère " + critere.getId()
+                + " : " + critere.getImages().size()
+                + " images"
+            );
         return new CritereDto(
             critere.getId(),
             critere.getOrgane(),

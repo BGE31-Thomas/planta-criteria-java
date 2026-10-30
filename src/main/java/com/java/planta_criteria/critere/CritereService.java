@@ -52,6 +52,7 @@ public class CritereService {
         return critereMapper.toSearchDto(critere);
     }
 
+    @Transactional(readOnly = true)
     public List<CritereDto> findByPlante(@NonNull Integer planteId, @NonNull String slug) {
 
         Taxref plante = taxrefRepository.findById(

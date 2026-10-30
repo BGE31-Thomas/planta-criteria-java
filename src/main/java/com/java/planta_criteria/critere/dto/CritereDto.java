@@ -18,6 +18,8 @@ public class CritereDto {
 
     private PlantSearchDto plante;
 
+    private Long nombreImages;
+
     public CritereDto() {
     }
 
@@ -70,5 +72,12 @@ public class CritereDto {
     }
     public void setPlante(PlantSearchDto plante) {
         this.plante = plante;
+    }
+
+    public Long getNombreImages() {
+        return nombreImages;
+    }
+    public void setNombreImages(Long nombre) {
+        this.nombreImages = nombre;
     }
 }
