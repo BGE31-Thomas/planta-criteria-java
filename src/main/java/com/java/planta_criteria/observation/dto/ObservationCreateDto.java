@@ -1,8 +1,10 @@
 package com.java.planta_criteria.observation.dto;
 
+
 public class ObservationCreateDto{
     private Integer serieId;
     private Integer planteId;
+   
 
     public ObservationCreateDto() {
     }

@@ -5,6 +5,8 @@ import com.java.planta_criteria.user.Users;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,7 +67,9 @@ public class Serie {
     }
 
     public void setDate(LocalDate date) {
-        this.date = date;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd").withZone(ZoneOffset.UTC);
+        String formattedString = date.format(formatter);
+        this.date = formattedString != null ? LocalDate.parse(formattedString, formatter) : null;
     }
 
     public List<Observation> getObservations() {

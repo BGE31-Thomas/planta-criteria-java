@@ -5,6 +5,7 @@ import com.java.planta_criteria.serie.dto.SerieSummaryDto;
 import com.java.planta_criteria.serie.dto.SerieCreateDto;
 
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -29,9 +30,14 @@ public class SerieController {
     @PostMapping
     @PreAuthorize("hasRole('USER')")
     public SerieSearchDto create(
-        @RequestBody SerieCreateDto dto
+        @RequestBody SerieCreateDto dto,
+        Authentication authentication
     ) {
-        return serieService.create(dto);
+        String email = authentication.getName();
+
+        SerieSearchDto serie = serieService.create(dto, email);
+
+        return serie;
     }
 
     @PutMapping("/{id}/{slug}")

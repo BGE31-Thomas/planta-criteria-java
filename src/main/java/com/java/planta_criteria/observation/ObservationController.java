@@ -38,7 +38,7 @@ public class ObservationController {
     public ObservationDto create(
         @RequestBody ObservationCreateDto dto
     ) {
-        return observationService.create(dto);
+        return observationService.createWithCriteres(dto);
     }
 
     @PutMapping("/{id}")

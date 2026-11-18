@@ -11,7 +11,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 
 import org.springframework.security.config.http.SessionCreationPolicy;
-
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -43,6 +42,9 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * Provider utilisé pour l'authentification email / mot de passe.
+     */
     @Bean
     AuthenticationProvider authenticationProvider(
         PasswordEncoder passwordEncoder
@@ -51,22 +53,24 @@ public class SecurityConfig {
         DaoAuthenticationProvider provider =
             new DaoAuthenticationProvider(userDetailsService);
 
-        provider.setPasswordEncoder(
-            passwordEncoder
-        );
+        provider.setPasswordEncoder(passwordEncoder);
 
         return provider;
     }
 
+    /**
+     * Gestionnaire d'authentification.
+     */
     @Bean
     AuthenticationManager authenticationManager(
         AuthenticationProvider authenticationProvider
     ) {
-        return new ProviderManager(
-            authenticationProvider
-        );
+        return new ProviderManager(authenticationProvider);
     }
 
+    /**
+     * Configuration de la sécurité HTTP.
+     */
     @Bean
     SecurityFilterChain securityFilterChain(
         HttpSecurity http,
@@ -83,29 +87,33 @@ public class SecurityConfig {
                 )
             )
 
-            .authenticationProvider(
-                authenticationProvider
-            )
+            .authenticationProvider(authenticationProvider)
 
             .authorizeHttpRequests(auth -> auth
 
-                .requestMatchers("/uploads/images/**").permitAll()
+                .requestMatchers(
+                    "/uploads/images/**"
+                ).permitAll()
 
-                // Endpoint de connexion accessible sans authentification.
-                .requestMatchers("/api/**").permitAll()
+                // Routes publiques
+                .requestMatchers(
+                    "/api/auth/**"
+                ).permitAll()
 
-                .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**")
-                    .permitAll()
+                .requestMatchers(
+                    org.springframework.http.HttpMethod.OPTIONS,
+                    "/**"
+                ).permitAll()
 
-                // Les autres routes nécessitent une authentification.
+                // Toutes les autres routes nécessitent une authentification
                 .anyRequest().authenticated()
             )
+
             .addFilterBefore(
                 jwtAuthenticationFilter,
                 UsernamePasswordAuthenticationFilter.class
             )
 
-            
             .cors(cors ->
                 cors.configurationSource(corsConfigurationSource)
             );
