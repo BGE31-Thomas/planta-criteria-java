@@ -120,6 +120,62 @@ public class ObservationService {
         return observationMapper.toSearchDto(savedObservation);
     }
 
+    @Transactional
+    public ObservationDto createWithCriteresSerie(
+        Integer serieId,
+        Integer planteId
+    ) {
+        System.out.println("Creating observation with serieId: " + serieId + " and planteId: " + planteId);
+        Serie serie = serieRepository.findById(
+            Objects.requireNonNull(serieId)
+        ).orElseThrow(() ->
+            new SerieNotFoundException(serieId)
+        );
+
+        Taxref plante = taxrefRepository.findById(
+            Objects.requireNonNull(planteId)
+        ).orElseThrow(() ->
+            new TaxrefNotFoundException(planteId)
+        );
+
+        // Création de l'observation
+        Observation observation = new Observation();
+
+        observation.setPlante(plante);
+        observation.setSerie(serie);
+
+        Observation savedObservation =
+            observationRepository.save(observation);
+
+        // Récupération des critères de la plante
+        List<Critere> criteres =
+            critereRepository.findByPlante(plante);
+
+        // Récupération du statut initial (une seule fois)
+        Statut statutInitial = statutRepository.findByLibelle("Non vérifié")
+            .orElseThrow(() ->
+                new EntityNotFoundException("Statut initial introuvable")
+            );
+
+        // Création des observations de critères
+        List<ObservationCritere> observationsCriteres =
+            criteres.stream().map(critere -> {
+
+                ObservationCritere oc = new ObservationCritere();
+
+                oc.setObservation(savedObservation);
+                oc.setCritere(critere);
+                oc.setStatut(statutInitial);
+
+                return oc;
+
+            }).toList();
+
+        observationCritereRepository.saveAll(Objects.requireNonNull(observationsCriteres));
+
+        return observationMapper.toSearchDto(savedObservation);
+    }
+
 
     @Transactional(readOnly = true)
     public List<ObservationDto> findAll() {

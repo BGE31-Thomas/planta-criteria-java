@@ -3,6 +3,8 @@ package com.java.planta_criteria.serie;
 import com.java.planta_criteria.serie.dto.SerieSearchDto;
 import com.java.planta_criteria.serie.dto.SerieSummaryDto;
 import com.java.planta_criteria.serie.dto.SerieCreateDto;
+import com.java.planta_criteria.serie.dto.SerieObservationCreateDto;
+import com.java.planta_criteria.serie.dto.SerieObservationDto;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -27,17 +29,15 @@ public class SerieController {
         return serieService.findById(id, slug);
     }
 
-    @PostMapping
+    @PostMapping("/observation")
     @PreAuthorize("hasRole('USER')")
-    public SerieSearchDto create(
-        @RequestBody SerieCreateDto dto,
+    public SerieObservationDto create(
+        @RequestBody SerieObservationCreateDto dto,
         Authentication authentication
     ) {
         String email = authentication.getName();
 
-        SerieSearchDto serie = serieService.create(dto, email);
-
-        return serie;
+        return serieService.createWithObservation(dto, email);
     }
 
     @PutMapping("/{id}/{slug}")

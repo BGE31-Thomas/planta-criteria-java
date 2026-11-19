@@ -1,6 +1,10 @@
 package com.java.planta_criteria.serie;
 
+import com.java.planta_criteria.observation.ObservationService;
+import com.java.planta_criteria.observation.dto.ObservationDto;
 import com.java.planta_criteria.serie.dto.SerieCreateDto;
+import com.java.planta_criteria.serie.dto.SerieObservationCreateDto;
+import com.java.planta_criteria.serie.dto.SerieObservationDto;
 import com.java.planta_criteria.serie.dto.SerieSearchDto;
 import com.java.planta_criteria.serie.dto.SerieSummaryDto;
 import com.java.planta_criteria.user.UserNotFoundException;
@@ -20,15 +24,18 @@ public class SerieService {
     private final SerieRepository serieRepository;
     private final SerieMapper serieMapper;
     private final UserRepository userRepository;
+    private final ObservationService observationService;
 
     public SerieService(
         SerieRepository serieRepository,
+        UserRepository userRepository,
         SerieMapper serieMapper,
-        UserRepository userRepository
+        ObservationService observationService
     ) {
         this.serieRepository = serieRepository;
-        this.serieMapper = serieMapper;
         this.userRepository = userRepository;
+        this.serieMapper = serieMapper;
+        this.observationService = observationService;
     }
 
     public SerieSearchDto findById(Integer id, String slug) {
@@ -46,6 +53,41 @@ public class SerieService {
         }
 
         return serieMapper.toSearchDto(serie);
+    }
+
+    @Transactional
+    public SerieObservationDto createWithObservation(
+        SerieObservationCreateDto dto,
+        String userEmail
+    ) {
+        // 1. Récupération de l'utilisateur
+        Users user = userRepository.findByEmail(
+            Objects.requireNonNull(userEmail)
+        ).orElseThrow(() ->
+            new UserNotFoundException(userEmail)
+        );
+
+        // 2. Création de la série
+        Serie serie = new Serie();
+
+        serie.setIntitule(dto.getIntitule());
+        serie.setLieu(dto.getLieu());
+        serie.setDate(dto.getDate());
+        serie.setUser(user);
+
+        Serie savedSerie = serieRepository.save(serie);
+
+        // 3. Création de l'observation et de ses critères
+        ObservationDto observation = observationService.createWithCriteresSerie(
+            savedSerie.getId(),
+            dto.getPlanteId()
+        );
+
+        // 4. Retour des deux objets
+        return new SerieObservationDto(
+            serieMapper.toSearchDto(savedSerie),
+            observation
+        );
     }
 
     @Transactional
