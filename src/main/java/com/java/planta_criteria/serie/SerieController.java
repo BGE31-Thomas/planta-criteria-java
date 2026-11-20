@@ -2,9 +2,10 @@ package com.java.planta_criteria.serie;
 
 import com.java.planta_criteria.serie.dto.SerieSearchDto;
 import com.java.planta_criteria.serie.dto.SerieSummaryDto;
-import com.java.planta_criteria.serie.dto.SerieCreateDto;
 import com.java.planta_criteria.serie.dto.SerieObservationCreateDto;
 import com.java.planta_criteria.serie.dto.SerieObservationDto;
+
+import java.util.List;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -47,5 +48,13 @@ public class SerieController {
         @RequestBody SerieSummaryDto dto
     ) {
         return serieService.update(id, dto, slug);
+    }
+
+    @GetMapping("/user")
+    @PreAuthorize("hasRole('USER')")
+    public List<SerieSearchDto> getAllByUser(
+        Authentication authentication
+    ) {
+        return serieService.getAllByUser(authentication.getName());
     }
 }

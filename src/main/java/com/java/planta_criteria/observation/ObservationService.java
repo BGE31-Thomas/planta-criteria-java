@@ -2,7 +2,6 @@ package com.java.planta_criteria.observation;
 
 import com.java.planta_criteria.critere.Critere;
 import com.java.planta_criteria.critere.CritereRepository;
-import com.java.planta_criteria.observation.dto.ObservationCreateDto;
 import com.java.planta_criteria.observation.dto.ObservationDto;
 import com.java.planta_criteria.observation.dto.ObservationUpdateDto;
 import com.java.planta_criteria.observation_critere.ObservationCritere;
@@ -33,7 +32,6 @@ public class ObservationService {
     private final ObservationMapper observationMapper;
     private final TaxrefRepository taxrefRepository;
     private final SerieRepository serieRepository;
-
     private final CritereRepository critereRepository;
     private final ObservationCritereRepository observationCritereRepository;
     private final StatutRepository statutRepository;
@@ -46,6 +44,7 @@ public class ObservationService {
         SerieRepository serieRepository,
         TaxrefRepository taxrefRepository,
         StatutRepository statutRepository
+        
     ) {
         this.observationRepository = observationRepository;
         this.critereRepository = critereRepository;
@@ -54,70 +53,7 @@ public class ObservationService {
         this.serieRepository = serieRepository;
         this.taxrefRepository = taxrefRepository;
         this.statutRepository = statutRepository;
-    }
-
-    @Transactional
-    public ObservationDto createWithCriteres(
-        ObservationCreateDto dto
-    ) {
-        System.out.println("Creating observation with serieId: " + dto.getSerieId() + " and planteId: " + dto.getPlanteId());
-        Observation observation = new Observation();
-
-        Serie serie = serieRepository.findById(Objects.requireNonNull(
-            dto.getSerieId(),
-            "L'identifiant de la série ne peut pas être null"
-        ))
-            .orElseThrow(() ->
-                new SerieNotFoundException(dto.getSerieId())
-            );
-
-        Taxref plante = taxrefRepository.findById(Objects.requireNonNull(
-            dto.getPlanteId(),
-            "L'identifiant de la plante ne peut pas être null"
-        ))
-            .orElseThrow(() ->
-                new TaxrefNotFoundException(dto.getPlanteId())
-            );
-
-        observation.setPlante(plante);
-        observation.setSerie(serie);
-
-        Observation savedObservation = observationRepository.save(observation);
-
-        List<Critere> criteres =
-            critereRepository.findByPlante(plante);
-
-        List<ObservationCritere> observationsCriteres =
-            criteres.stream().map(critere -> {
-
-                ObservationCritere oc = new ObservationCritere();
-
-                oc.setObservation(savedObservation);
-                oc.setCritere(critere);
-
-                Statut statutInitial = statutRepository.findByLibelle("Non vérifié")
-                    .orElseThrow(() -> new EntityNotFoundException(
-                        "Statut initial introuvable"
-                    ));
-
-                ObservationCritere observationCritere = new ObservationCritere();
-
-                observationCritere.setObservation(observation);
-                observationCritere.setCritere(critere);
-                observationCritere.setStatut(statutInitial);
-
-                observationCritereRepository.save(observationCritere);
-
-                return observationCritere;
-
-            }).toList();
-
-        observationCritereRepository.saveAll(Objects.requireNonNull(
-            observationsCriteres,
-            "Les critères d'observation ne peuvent pas être null"
-        ));
-
-        return observationMapper.toSearchDto(savedObservation);
+       
     }
 
     @Transactional

@@ -3,8 +3,10 @@ package com.java.planta_criteria.observation;
 import com.java.planta_criteria.observation.dto.ObservationCreateDto;
 import com.java.planta_criteria.observation.dto.ObservationDto;
 import com.java.planta_criteria.observation.dto.ObservationUpdateDto;
+import com.java.planta_criteria.serie.SerieService;
 
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,11 +17,15 @@ import java.util.List;
 public class ObservationController {
 
     private final ObservationService observationService;
+    private final SerieService serieService;
 
     public ObservationController(
-        ObservationService observationService
+        ObservationService observationService,
+        SerieService serieService
     ) {
         this.observationService = observationService;
+        this.serieService = serieService;
+
     }
 
     @GetMapping
@@ -35,10 +41,17 @@ public class ObservationController {
     }
 
     @PostMapping
-    public ObservationDto create(
-        @RequestBody ObservationCreateDto dto
+    @PreAuthorize("hasRole('USER')")
+    public ObservationDto addObservation(
+       
+        @RequestBody ObservationCreateDto dto,
+        Authentication authentication
     ) {
-        return observationService.createWithCriteres(dto);
+        return serieService.addObservation(
+            dto.getSerieId(),
+            dto.getPlanteId(),
+            authentication.getName()
+        );
     }
 
     @PutMapping("/{id}")
